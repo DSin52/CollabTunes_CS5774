@@ -5,8 +5,9 @@
         <!-- Only able to edit profile if logged in user is on his/her own page. -->
         <?php if($_SESSION['username'] == $user) { ?>
           <button type="button" class="btn btn-success profile" data-toggle="modal" data-target="#editModal">Edit Profile</button>
-        <?php } ?>
-
+        <?php } else { ?>
+          <button type="button" class="btn btn-success" id="collaborate">Add As Collaborator</button>
+          <?php } ?>
         <h3 class="prof"><?= $curUser['first_name']." ".$curUser['last_name']?></h3>
       </div>
 

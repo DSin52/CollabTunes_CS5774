@@ -15,6 +15,8 @@ RewriteRule ^logoff/?$ controller/user_logoff.php
 RewriteRule ^comment/delete$ controller/delete_comment.php
 RewriteRule ^comment$ controller/add_comment.php
 
+RewriteRule ^collaborate$ controller/collaborate.php
+
 RewriteRule ^album/create$ controller/album_create.php
 RewriteRule ^([a-zA-Z0-9]+)/album/delete$ controller/album_delete.php
 RewriteRule ^([a-zA-Z0-9]+)/album/get$ controller/album_get.php

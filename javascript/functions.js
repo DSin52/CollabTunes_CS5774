@@ -434,6 +434,7 @@ $(document).ready(function() {
 		}
 	});
 
+	//Delete comments from page
 	$(".delete_comment").click(function (e) {
 		var idToDelete = $(this).val().split("_")[2];
 
@@ -443,6 +444,17 @@ $(document).ready(function() {
 
 		$.post("../comment/delete", {
 			id: idToDelete
+		});
+	});
+
+	$("#collaborate").click(function (e) {
+		var path = location.pathname.split("/");
+		var collabWith = path[path.length - 1];
+
+		$.post("./collaborate", {
+			"collaborator": collabWith
+		}, function (data) {
+			console.log(data);
 		});
 	});
 

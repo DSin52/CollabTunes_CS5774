@@ -16,20 +16,20 @@ class User {
 
 	public function __construct($args = array()) {
 		$defaultArgs = array(
-            'email' => null,
-            'username' => '',
-            'password' => '',
-            'first_name' => null,
-            'last_name' => null,
-            );
+			'email' => null,
+			'username' => '',
+			'password' => '',
+			'first_name' => null,
+			'last_name' => null,
+			);
 
 		$args += $defaultArgs;
-       
-        $this->email = $args['email'];     
-        $this->username = $args['username'];
-        $this->password = password_hash($args['password'], PASSWORD_DEFAULT);
-        $this->first_name = $args['first_name'];
-        $this->last_name = $args['last_name'];
+
+		$this->email = $args['email'];     
+		$this->username = $args['username'];
+		$this->password = password_hash($args['password'], PASSWORD_DEFAULT);
+		$this->first_name = $args['first_name'];
+		$this->last_name = $args['last_name'];
 
 	}
 
@@ -147,7 +147,7 @@ class User {
 
 	//Edits the properties of the user
 	public static function editUser($username, $updated = array()) {
-        if (($curUser = self::userExists("username", $username)) != null) {
+		if (($curUser = self::userExists("username", $username)) != null) {
 			$fields = array();
 			$values = array();
 			foreach ($updated as $key => $value) {
@@ -178,6 +178,142 @@ class User {
 			$db->execute($query);
 			return true;
 		}
-        return false;
+		return false;
+	}
+
+	//Collaborate with another user
+	public static function collab_request($collab1, $collab2) {
+		//Need to look up twice because it is bidirectional and collaborator
+		//might be either in friend_one or friend_two location
+		$getInfo1 = sprintf("SELECT * from %s where `%s`='%s' and `%s` = '%s'",
+			"collaborators",
+			"friend_one",
+			$collab1,
+			"friend_two",
+			$collab2
+			);
+
+		$getInfo2 = sprintf("SELECT * from %s where `%s`='%s' and `%s` = '%s'",
+			"collaborators",
+			"friend_one",
+			$collab2,
+			"friend_two",
+			$collab1
+			);
+
+		$db = Db::instance();
+		$result = $db->lookup($getInfo1);
+		$result2 = $db->lookup($getInfo2);
+
+		if (!mysql_num_rows($result) && !mysql_num_rows($result2)) {
+			//Need to insert twice because it is bidirectional and collaborator
+			//might be either in friend_one or friend_two location
+			$time = date("Y-m-d H:i:s");
+			$query = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`) values('%s', '%s', '%s', '%s')",
+				'collaborators',
+				'friend_one',
+				'friend_two',
+				'status',
+				'modified',
+				$collab1,
+				$collab2,
+				0,
+				$time
+				);
+
+			$query2 = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`) values('%s', '%s', '%s', '%s')",
+				'collaborators',
+				'friend_one',
+				'friend_two',
+				'status',
+				'modified',
+				$collab2,
+				$collab1,
+				0,
+				$time
+				);
+
+			$db->execute($query);
+			$db->execute($query2);
+		} else {
+			$time = date("Y-m-d H:i:s");
+			$query = sprintf("UPDATE %s SET `%s`='%s', `%s`='%s' WHERE `%s`='%s' and `%s`='%s'",
+				'collaborators',
+				'status',
+				1,
+				'modified',
+				$time,
+				"friend_one",
+				$collab1,
+				"friend_two",
+				$collab2
+				);
+			$query2 = sprintf("UPDATE %s SET `%s`='%s', `%s`='%s' WHERE `%s`='%s' and `%s`='%s'",
+				'collaborators',
+				'status',
+				1,
+				'modified',
+				$time,
+				"friend_one",
+				$collab2,
+				"friend_two",
+				$collab1
+				);
+
+			$db->execute($query);
+			$db->execute($query2);
+		}
+	}
+
+	//Checks to see if two people are collaborators with each other
+	public static function isCollaborator($collab1, $collab2) {
+		$query = sprintf("select * from %s where `%s`='%s' and `%s`='%s'",
+			'collaborators',
+			'friend_one',
+			$collab1,
+			'friend_two',
+			$collab2
+			);
+
+		$query2 = sprintf("select * from %s where `%s`='%s' and `%s`='%s'",
+			'collaborators',
+			'friend_one',
+			$collab2,
+			'friend_two',
+			$collab1
+			);
+
+		$db = Db::instance();
+		$result = $db->lookup($getInfo1);
+		$result2 = $db->lookup($getInfo2);
+
+		if (!mysql_num_rows($result) && !mysql_num_rows($result2)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	//Removes Collaboration with someone
+	public static function removeCollaborator($collab1, $collab2) {
+		$query = sprintf("delete from %s where `%s`='%s' and `%s`='%s'",
+			'collaborators',
+			'friend_one',
+			$collab1,
+			'friend_two',
+			$collab2
+			);
+
+		$query2 = sprintf("select * from %s where `%s`='%s' and `%s`='%s'",
+			'collaborators',
+			'friend_one',
+			$collab2,
+			'friend_two',
+			$collab1
+			);
+
+		$db = Db::instance();
+		$result = $db->execute($getInfo1);
+		$result2 = $db->execute($getInfo2);
 	}
 }
