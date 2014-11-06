@@ -324,11 +324,9 @@ class User {
 
 	//Get all collaborators for a user
 	public static function getCollaborators($username) {
-		$query = sprintf("select * from %s where `%s` = '%s' and `%s`<>'%s' and `%s`='%s'",
+		$query = sprintf("select * from %s where `%s` = '%s' and `%s`='%s'",
 			'collaborators',
 			'friend_one',
-			$username,
-			'sent_by',
 			$username,
 			'status',
 			0
