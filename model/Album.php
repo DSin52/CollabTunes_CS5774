@@ -229,7 +229,8 @@ class Album {
     }
 
     public static function comment($album_name, $album_owner, $comment, $username, $time) {
-    	$query = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`, `%s`) values (\"%s\", '%s', '%s', '%s', '%s')",
+    	$db = Db::instance();
+        $query = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`, `%s`) values (\"%s\", '%s', '%s', '%s', '%s')",
     		"comment",
     		"album_name",
     		"album_owner",
@@ -243,7 +244,7 @@ class Album {
     		$time
     	);
 
-    	$db = Db::instance();
+    	
     	$db->execute($query);
     }
 
