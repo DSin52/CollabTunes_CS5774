@@ -209,28 +209,32 @@ class User {
 			//Need to insert twice because it is bidirectional and collaborator
 			//might be either in friend_one or friend_two location
 			$time = date("Y-m-d H:i:s");
-			$query = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`) values('%s', '%s', '%s', '%s')",
+			$query = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`, `%s`) values('%s', '%s', '%s', '%s', '%s')",
 				'collaborators',
 				'friend_one',
 				'friend_two',
 				'status',
 				'modified',
+				'sent_by',
 				$collab1,
 				$collab2,
 				0,
-				$time
+				$time,
+				$collab1
 				);
 
-			$query2 = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`) values('%s', '%s', '%s', '%s')",
+			$query2 = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`, `%s`) values('%s', '%s', '%s', '%s', '%s')",
 				'collaborators',
 				'friend_one',
 				'friend_two',
 				'status',
 				'modified',
+				'sent_by',
 				$collab2,
 				$collab1,
 				0,
-				$time
+				$time,
+				$collab1
 				);
 
 			$db->execute($query);
@@ -321,19 +325,35 @@ class User {
 
 	//Get all collaborators for a user
 	public static function getCollaborators($username) {
-		$query = sprintf("select * from %s where `%s` = '%s'",
+		$query = sprintf("select * from %s where `%s` = '%s' and `%s`<>'%s' and `%s`='%s'",
 			'collaborators',
 			'friend_one',
-			$username
+			$username,
+			'sent_by',
+			$username,
+			'status',
+			0
+			);
+
+		$query2 = sprintf("select * from %s where `%s` = '%s' and `%s`='%s'",
+			'collaborators',
+			'friend_one',
+			$username,
+			'status',
+			1
 			);
 
 		$db = Db::instance();
 		$result = $db->lookup($query);
+		$result2 = $db->lookup($query2);
 
 		$collabs = array();
 
 		while (($row = mysql_fetch_array($result)) != null) {
 			array_push($collabs, $row);
+		}
+		while (($row2 = mysql_fetch_array($result2)) != null) {
+			array_push($collabs, $row2);
 		}
 		return $collabs;
 	}

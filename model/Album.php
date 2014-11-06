@@ -244,7 +244,6 @@ class Album {
     		$time
     	);
 
-    	
     	$db->execute($query);
     }
 
