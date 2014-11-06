@@ -248,7 +248,7 @@ class Album {
     }
 
     public function getComments() {
-    	$query = sprintf("SELECT * from %s where `album_name`= \"%s\" and `album_owner`='%s'",
+    	$query = sprintf("SELECT * from %s where `album_name`= \"%s\" and `album_owner`='%s' ORDER BY `created` DESC",
     		"comment",
     		$this->album_name,
     		$this->album_owner
