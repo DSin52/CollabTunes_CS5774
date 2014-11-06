@@ -1,5 +1,5 @@
     <div class="collabContent">
-      <h1> Collaborators </h1> 
+      <!-- <h1> Collaborators </h1> 
       <div class="messages collab">
         <h3>Run_DMC_Poser</h3>
         <h3>Views: 1003043</h3>
@@ -19,7 +19,19 @@
         <h3>E-40_Fan</h3>
         <h3>Views: 1003043</h3>
         <h3> Collaborated On: Album 3, Song 4</h3>
-      </div>
+      </div> -->
+      <?php foreach($collabs as $collab) { ?>
+
+        <?php if ($collab[2] == 0) { ?>
+          <br><p><?= $collab[1] ?> Request sent on: <?= $collab[3] ?></p>
+          <button class="btn btn-success accept_request" value=<?= $collab[1] ?>>Accept Collaboration</button>
+          <button class="btn btn-danger deny_request" value=<?= $collab[1] ?>>Deny Collaboration</button>
+        <?php } else { ?>
+          <br><p><?= $collab[1] ?>  Collaborator since: <?= $collab[3] ?></p>
+          <button class="btn btn-danger deny_request" value=<?= $collab[1] ?>>Uncollaborate</button>
+        <?php } ?>
+
+      <?php } ?>
     </div>
   </body>
 </html>

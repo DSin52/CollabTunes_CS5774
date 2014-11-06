@@ -447,6 +447,7 @@ $(document).ready(function() {
 		});
 	});
 
+	//Send a collaborate request to a user
 	$("#collaborate").click(function (e) {
 		var path = location.pathname.split("/");
 		var collabWith = path[path.length - 1];
@@ -454,7 +455,39 @@ $(document).ready(function() {
 		$.post("./collaborate", {
 			"collaborator": collabWith
 		}, function (data) {
-			console.log(data);
+			location.reload();
+		});
+	});
+
+	//Uncollaborate with a user
+	$("#uncollaborate").click(function (e) {
+		var path = location.pathname.split("/");
+		var collabWith = path[path.length - 1];
+
+		$.post("./uncollaborate", {
+			"collaborator": collabWith
+		}, function (data) {
+			location.reload();
+		});
+	});
+
+	$(".accept_request").click(function (e) {
+		var userCollab = $(this).val();
+
+		$.post("./collaborate", {
+			"collaborator": userCollab
+		}, function (data) {
+			location.reload();
+		});
+	});
+
+	$(".deny_request").click(function (e) {
+		var cancelCollab = $(this).val();
+
+		$.post("./uncollaborate", {
+			"collaborator": cancelCollab
+		}, function (data) {
+			location.reload();
 		});
 	});
 

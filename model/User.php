@@ -284,13 +284,15 @@ class User {
 			);
 
 		$db = Db::instance();
-		$result = $db->lookup($getInfo1);
-		$result2 = $db->lookup($getInfo2);
+		$result = $db->lookup($query);
+		$result2 = $db->lookup($query2);
 
 		if (!mysql_num_rows($result) && !mysql_num_rows($result2)) {
-			return false;
+			return null;
 		} else {
-			return true;
+			$row = mysql_fetch_assoc($result);
+			// echo $row['status'];
+			return $row['status'];
 		}
 	}
 
@@ -304,7 +306,7 @@ class User {
 			$collab2
 			);
 
-		$query2 = sprintf("select * from %s where `%s`='%s' and `%s`='%s'",
+		$query2 = sprintf("delete from %s where `%s`='%s' and `%s`='%s'",
 			'collaborators',
 			'friend_one',
 			$collab2,
@@ -313,7 +315,26 @@ class User {
 			);
 
 		$db = Db::instance();
-		$result = $db->execute($getInfo1);
-		$result2 = $db->execute($getInfo2);
+		$result = $db->execute($query);
+		$result2 = $db->execute($query2);
+	}
+
+	//Get all collaborators for a user
+	public static function getCollaborators($username) {
+		$query = sprintf("select * from %s where `%s` = '%s'",
+			'collaborators',
+			'friend_one',
+			$username
+			);
+
+		$db = Db::instance();
+		$result = $db->lookup($query);
+
+		$collabs = array();
+
+		while (($row = mysql_fetch_array($result)) != null) {
+			array_push($collabs, $row);
+		}
+		return $collabs;
 	}
 }

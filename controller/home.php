@@ -10,6 +10,16 @@ if(isset($_SESSION['username'])) {
 		$pageName = 'CollabTunes - '.$user;
 		$albums = Album::getAlbums("album_owner", $user);
 		$curUser = User::publicUserInfo("username", $user);
+		$displayButton = "add";
+		$isCollab = User::isCollaborator($_SESSION['username'], $user);
+
+		if ($isCollab != null) {
+			if ($isCollab == 0) {
+				$displayButton = "sent";
+			} else {
+				$displayButton = "accepted";
+			}
+		}
 
 		require_once '../views/header.html';
     	require_once '../views/profile.html';
