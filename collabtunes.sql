@@ -2,8 +2,8 @@
 -- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 05, 2014 at 08:38 PM
+-- Host: localhost
+-- Generation Time: Nov 06, 2014 at 05:08 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -53,16 +53,18 @@ CREATE TABLE IF NOT EXISTS `collaborators` (
   `friend_one` varchar(100) NOT NULL,
   `friend_two` varchar(100) NOT NULL,
   `status` int(11) NOT NULL,
-  `modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+`id` int(11) NOT NULL,
+  `sent_by` varchar(100) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
 
 --
 -- Dumping data for table `collaborators`
 --
 
-INSERT INTO `collaborators` (`friend_one`, `friend_two`, `status`, `modified`) VALUES
-('divit52', 'test', 1, '2014-11-05 22:47:17'),
-('test', 'divit52', 1, '2014-11-05 22:47:17');
+INSERT INTO `collaborators` (`friend_one`, `friend_two`, `status`, `modified`, `id`, `sent_by`) VALUES
+('test', 'divit52', 0, '2014-11-06 07:11:59', 39, 'test'),
+('divit52', 'test', 0, '2014-11-06 07:11:59', 40, 'test');
 
 -- --------------------------------------------------------
 
@@ -77,7 +79,16 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `album_owner` varchar(100) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 `id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`username`, `album_name`, `text`, `album_owner`, `created`, `id`) VALUES
+('divit52', 'test', 'testing', 'test', '2014-11-06 06:10:44', 10),
+('schadha', 'test', 'testing', 'test', '2014-11-06 06:11:16', 11),
+('test', 'test', 'testa', 'test', '2014-11-06 06:35:03', 12);
 
 -- --------------------------------------------------------
 
@@ -137,6 +148,12 @@ ALTER TABLE `album`
  ADD PRIMARY KEY (`album_owner`,`album_name`);
 
 --
+-- Indexes for table `collaborators`
+--
+ALTER TABLE `collaborators`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `comment`
 --
 ALTER TABLE `comment`
@@ -153,10 +170,15 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `collaborators`
+--
+ALTER TABLE `collaborators`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
+--
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
