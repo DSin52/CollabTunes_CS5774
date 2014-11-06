@@ -12,8 +12,8 @@ RewriteRule ^processLogin/?$ controller/user_login.php
 RewriteRule ^processRegistration/?$ controller/user_register.php
 RewriteRule ^logoff/?$ controller/user_logoff.php
 
-RewriteRule ^comment/delete$ controller/delete_comment.php
-RewriteRule ^comment$ controller/add_comment.php
+RewriteRule ^comment/delete$ controller/comment_delete.php
+RewriteRule ^comment$ controller/comment_add.php
 
 RewriteRule ^collaborate$ controller/collaborate.php
 RewriteRule ^uncollaborate$ controller/uncollaborate.php
