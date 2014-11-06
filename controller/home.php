@@ -11,12 +11,15 @@ if(isset($_SESSION['username'])) {
 		$albums = Album::getAlbums("album_owner", $user);
 		$curUser = User::publicUserInfo("username", $user);
 		$displayButton = "add";
-		$isCollab = User::isCollaborator($_SESSION['username'], $user);
-
+		$result = User::isCollaborator($_SESSION['username'], $user);
+		$sentBy = $result['sent_by'];
+		$isCollab = $result['status'];
 		if ($isCollab != null) {
-			if ($isCollab == 0) {
+			if ($isCollab == 0 && strcmp($sentBy, $_SESSION['username']) == 0) {
 				$displayButton = "sent";
-			} else {
+			} else if ($isCollab == 0) {
+				$displayButton = "waiting";
+			}else {
 				$displayButton = "accepted";
 			}
 		}

@@ -279,24 +279,23 @@ class User {
 			$collab2
 			);
 
-		$query2 = sprintf("select * from %s where `%s`='%s' and `%s`='%s'",
-			'collaborators',
-			'friend_one',
-			$collab2,
-			'friend_two',
-			$collab1
-			);
+		// $query2 = sprintf("select * from %s where `%s`='%s' and `%s`='%s'",
+		// 	'collaborators',
+		// 	'friend_one',
+		// 	$collab2,
+		// 	'friend_two',
+		// 	$collab1
+		// 	);
 
 		$db = Db::instance();
 		$result = $db->lookup($query);
-		$result2 = $db->lookup($query2);
+		// $result2 = $db->lookup($query2);
 
-		if (!mysql_num_rows($result) && !mysql_num_rows($result2)) {
+		if (!mysql_num_rows($result) /*&& !mysql_num_rows($result2)*/) {
 			return null;
 		} else {
 			$row = mysql_fetch_assoc($result);
-			// echo $row['status'];
-			return $row['status'];
+			return $row;
 		}
 	}
 

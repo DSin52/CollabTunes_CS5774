@@ -5,12 +5,12 @@ $(document).ready(function() {
 		var password = $("#password").val();
 
 		if (!$("#username") || username.length == 0) {
-	    $("#logInError").text("Please enter username!");
+			$("#logInError").text("Please enter username!");
 			return;
 		}
 
 		if (!$("#password") || password.length == 0) {
-	    $("#logInError").text("Please enter password!");
+			$("#logInError").text("Please enter password!");
 			return;
 		}
 
@@ -41,27 +41,27 @@ $(document).ready(function() {
 			lName.length == 0 || email.length == 0 || uName.length == 0 ||
 			pWord.length == 0 || vWord.length == 0) {
 			$("#createAccountError").text("Please fill out the entire form");
-			return;
-		}
+		return;
+	}
 
-		var accountInfo = {
-			"firstname": fName,
-			"lastname": lName,
-			"email": email,
-			"username": uName,
-			"password1": pWord,
-			"password2": vWord,
-		}
+	var accountInfo = {
+		"firstname": fName,
+		"lastname": lName,
+		"email": email,
+		"username": uName,
+		"password1": pWord,
+		"password2": vWord,
+	}
 
-		$.post("./processRegistration", accountInfo, function (data) {
-	 		if (data) {
-	 			$("#createAccountError").text(data);
-	 		} else {
-				$("#createModal").modal('hide');
-                window.location.href = './';
-	 		}
-	 	});
+	$.post("./processRegistration", accountInfo, function (data) {
+		if (data) {
+			$("#createAccountError").text(data);
+		} else {
+			$("#createModal").modal('hide');
+			window.location.href = './';
+		}
 	});
+});
 
 	//Creates a new album for the user
 	$("#createalbum").click(function(e) {
@@ -79,35 +79,35 @@ $(document).ready(function() {
 		}
 
 		$("#albumForm").submit(function(e) {
-				var formObj = $(this);
-				var formData = new FormData(this);
+			var formObj = $(this);
+			var formData = new FormData(this);
 
-				$.ajax({
-			        url: "./album/create",
-			    type: 'POST',
-			        data:  formData,
-			    mimeType:"multipart/form-data",
-			    contentType: false,
-			        cache: false,
-			        processData:false,
-			    success: function(data, textStatus, jqXHR)
-			    {
-			 		var data = JSON.parse(data);
-			 		if (data.Error) {
-			 			$("#createAlbumError").text(data.Error);
-			 		} else {
-			 			$("#trackModal").modal("hide");
-			 			reloadPage();
-			 		}
-			    },
-			     error: function(jqXHR, textStatus, errorThrown) 
-			     {
-			     	$("#createAlbumError").text(jqXHR);
-			     }          
-			    });
-			    e.preventDefault(); 
+			$.ajax({
+				url: "./album/create",
+				type: 'POST',
+				data:  formData,
+				mimeType:"multipart/form-data",
+				contentType: false,
+				cache: false,
+				processData:false,
+				success: function(data, textStatus, jqXHR)
+				{
+					var data = JSON.parse(data);
+					if (data.Error) {
+						$("#createAlbumError").text(data.Error);
+					} else {
+						$("#trackModal").modal("hide");
+						reloadPage();
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) 
+				{
+					$("#createAlbumError").text(jqXHR);
+				}          
 			});
-			$("#albumForm").submit();
+			e.preventDefault(); 
+		});
+		$("#albumForm").submit();
 	});
 
 	//Gets and populates the album information in the modal
@@ -135,26 +135,26 @@ $(document).ready(function() {
 				var formData = new FormData(this);
 				
 				$.ajax({
-			        url: "./album/update",
-			    type: 'POST',
-			        data:  formData,
-			    mimeType:"multipart/form-data",
-			    contentType: false,
-			        cache: false,
-			        processData:false,
-			    success: function(data, textStatus, jqXHR)
-			    {
-			 		var data = JSON.parse(data);
+					url: "./album/update",
+					type: 'POST',
+					data:  formData,
+					mimeType:"multipart/form-data",
+					contentType: false,
+					cache: false,
+					processData:false,
+					success: function(data, textStatus, jqXHR)
+					{
+						var data = JSON.parse(data);
 
-			 		if (data["Error"]) {
-			 			$("#albumEditError").text(data["Error"]);
-			 		} else {
-			 			$("#editAlbumModal").modal("hide");
-			 			reloadPage();
-			 		}
-			    }
-			    });
-			    e.preventDefault(); 
+						if (data["Error"]) {
+							$("#albumEditError").text(data["Error"]);
+						} else {
+							$("#editAlbumModal").modal("hide");
+							reloadPage();
+						}
+					}
+				});
+				e.preventDefault(); 
 			});
 			$("#albumFormEdit").submit();
 
@@ -226,14 +226,14 @@ $(document).ready(function() {
 		});
 
 		if (fName.length == 0 || lName.length == 0 || email.length == 0 || user.length == 0) {
-            $("#editProfileError").text("All values except Password and Verify Password are mandatory!");
+			$("#editProfileError").text("All values except Password and Verify Password are mandatory!");
 			return;
 		}
 
 		if (pW.length > 0 && pW !== verPW) {
 			$("#editProfileError").text("Please make sure passwords match before updating!");
-            $("#user_password").val("");
-            $("#verify_password").val("");
+			$("#user_password").val("");
+			$("#verify_password").val("");
 			return;
 		} else {
 			var updatedInformation = {
@@ -248,13 +248,13 @@ $(document).ready(function() {
 			if (hasEmailChanged) {
 				updatedInformation['email'] = email;
 			}
-            
+			
 			$.post("./updateUser", updatedInformation, function (data) {
 				if (data) {
-                    $("#editProfileError").text(data);
+					$("#editProfileError").text(data);
 				} else {
 					$("#editModal").modal('hide');
-                    window.location.href = "./" + user;
+					window.location.href = "./" + user;
 				}
 			});
 		}
@@ -313,29 +313,29 @@ $(document).ready(function() {
 				var formData = new FormData(this);
 
 				$.ajax({
-			        url: "../track/create",
-			    type: 'POST',
-			        data:  formData,
-			    mimeType:"multipart/form-data",
-			    contentType: false,
-			        cache: false,
-			        processData:false,
-			    success: function(data, textStatus, jqXHR)
-			    {
-			 		var data = JSON.parse(data);
-			 		if (data.Error) {
-			 			$("#trackCreateError").text(data.Error);
-			 		} else {
-			 			$("#trackModal").modal("hide");
-			 			reloadPage();
-			 		}
-			    },
-			     error: function(jqXHR, textStatus, errorThrown) 
-			     {
-			     	$("#trackCreateError").text(jqXHR);
-			     }          
-			    });
-			    e.preventDefault(); 
+					url: "../track/create",
+					type: 'POST',
+					data:  formData,
+					mimeType:"multipart/form-data",
+					contentType: false,
+					cache: false,
+					processData:false,
+					success: function(data, textStatus, jqXHR)
+					{
+						var data = JSON.parse(data);
+						if (data.Error) {
+							$("#trackCreateError").text(data.Error);
+						} else {
+							$("#trackModal").modal("hide");
+							reloadPage();
+						}
+					},
+					error: function(jqXHR, textStatus, errorThrown) 
+					{
+						$("#trackCreateError").text(jqXHR);
+					}          
+				});
+				e.preventDefault(); 
 			});
 			$("#trackForm").submit();
 		}
@@ -360,14 +360,14 @@ $(document).ready(function() {
 		$.post("../track/delete", {
 			"track_name": trackName,
 			"track_album": trackAlbum
-			}, function (data) {
-				var data = JSON.parse(data);
-				if (data.Error) {trackDeleteError
-					$("#trackDeleteError").text(data.Error);
-				}
-				else {
-					reloadPage();
-				}
+		}, function (data) {
+			var data = JSON.parse(data);
+			if (data.Error) {trackDeleteError
+				$("#trackDeleteError").text(data.Error);
+			}
+			else {
+				reloadPage();
+			}
 		});
 	});
 
@@ -390,20 +390,20 @@ $(document).ready(function() {
 			$("#trackEditError").text("Please enter a valid new track name!");
 			return;
 		}
-			$.post("../track/edit", {
-				"track_name": trackName,
-				"track_album": trackAlbum,
-				"old_track_name": oldTrackName
-			}, function (data) {
+		$.post("../track/edit", {
+			"track_name": trackName,
+			"track_album": trackAlbum,
+			"old_track_name": oldTrackName
+		}, function (data) {
 
-				var data = JSON.parse(data);
+			var data = JSON.parse(data);
 
-				if (data.Error) {
-					$("#trackEditError").text(data.Error);
-				} else {
-					reloadPage();
-				}
-			});		
+			if (data.Error) {
+				$("#trackEditError").text(data.Error);
+			} else {
+				reloadPage();
+			}
+		});		
 	});
 
 	//Downloads the specified track
@@ -449,6 +449,18 @@ $(document).ready(function() {
 
 	//Send a collaborate request to a user
 	$("#collaborate").click(function (e) {
+		var path = location.pathname.split("/");
+		var collabWith = path[path.length - 1];
+
+		$.post("./collaborate", {
+			"collaborator": collabWith
+		}, function (data) {
+			location.reload();
+		});
+	});
+
+	//Accepts request from the user's profile page
+	$("#accept").click(function (e) {
 		var path = location.pathname.split("/");
 		var collabWith = path[path.length - 1];
 
