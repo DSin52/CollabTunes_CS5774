@@ -1,90 +1,83 @@
-# ************************************************************
-# Sequel Pro SQL dump
-# Version 4096
-#
-# http://www.sequelpro.com/
-# http://code.google.com/p/sequel-pro/
-#
-# Host: 127.0.0.1 (MySQL 5.6.20)
-# Database: collabtunes
-# Generation Time: 2014-11-09 04:46:17 +0000
-# ************************************************************
+-- phpMyAdmin SQL Dump
+-- version 4.2.7.1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Nov 09, 2014 at 07:57 AM
+-- Server version: 5.6.20
+-- PHP Version: 5.5.15
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+--
+-- Database: `collabtunes`
+--
 
-# Dump of table album
-# ------------------------------------------------------------
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `album`;
+--
+-- Table structure for table `album`
+--
 
-CREATE TABLE `album` (
+CREATE TABLE IF NOT EXISTS `album` (
   `album_summary` varchar(500) NOT NULL,
   `album_owner` varchar(100) NOT NULL,
   `album_genre` varchar(100) NOT NULL,
   `album_name` varchar(500) NOT NULL,
-  `album_image` varchar(200) NOT NULL,
-  PRIMARY KEY (`album_owner`,`album_name`)
+  `album_image` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `album` WRITE;
-/*!40000 ALTER TABLE `album` DISABLE KEYS */;
+--
+-- Dumping data for table `album`
+--
 
-INSERT INTO `album` (`album_summary`, `album_owner`, `album_genre`, `album_name`, `album_image`)
-VALUES
-	('testing','divit52','testing','testing','../uploads/divit52_testing.jpg');
+INSERT INTO `album` (`album_summary`, `album_owner`, `album_genre`, `album_name`, `album_image`) VALUES
+('test', 'test', 'test', 'test', '../uploads/test_test.jpg');
 
-/*!40000 ALTER TABLE `album` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `collaborators`
+--
 
-# Dump of table collaborators
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `collaborators`;
-
-CREATE TABLE `collaborators` (
+CREATE TABLE IF NOT EXISTS `collaborators` (
   `friend_one` varchar(100) NOT NULL,
   `friend_two` varchar(100) NOT NULL,
   `status` int(11) NOT NULL,
   `modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sent_by` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+`id` int(11) NOT NULL,
+  `sent_by` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `comment`
+--
 
-# Dump of table comment
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `comment`;
-
-CREATE TABLE `comment` (
+CREATE TABLE IF NOT EXISTS `comment` (
   `username` varchar(100) NOT NULL,
   `album_name` varchar(500) NOT NULL,
   `text` varchar(500) NOT NULL,
   `album_owner` varchar(100) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+`id` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `event`
+--
 
-# Dump of table event
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `event`;
-
-CREATE TABLE `event` (
+CREATE TABLE IF NOT EXISTS `event` (
   `event_type` varchar(32) DEFAULT NULL,
   `username` varchar(128) DEFAULT NULL,
   `data` varchar(128) DEFAULT NULL,
@@ -92,23 +85,20 @@ CREATE TABLE `event` (
   `when_happened` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `event` WRITE;
-/*!40000 ALTER TABLE `event` DISABLE KEYS */;
+--
+-- Dumping data for table `event`
+--
 
-INSERT INTO `event` (`event_type`, `username`, `data`, `album_name`, `when_happened`)
-VALUES
-	('add_track','divit52','divit52_into_testing_by_divit52','testing,divit52','2014-11-08 22:25:58');
+INSERT INTO `event` (`event_type`, `username`, `data`, `album_name`, `when_happened`) VALUES
+('add_album', 'test', 'test', 'test', '2014-11-09 06:51:12');
 
-/*!40000 ALTER TABLE `event` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `track`
+--
 
-# Dump of table track
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `track`;
-
-CREATE TABLE `track` (
+CREATE TABLE IF NOT EXISTS `track` (
   `track_name` varchar(200) NOT NULL,
   `track_path` varchar(500) NOT NULL,
   `track_owner` varchar(100) NOT NULL,
@@ -116,47 +106,71 @@ CREATE TABLE `track` (
   `album_owner` varchar(100) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `track` WRITE;
-/*!40000 ALTER TABLE `track` DISABLE KEYS */;
+-- --------------------------------------------------------
 
-INSERT INTO `track` (`track_name`, `track_path`, `track_owner`, `track_album`, `album_owner`)
-VALUES
-	('divit52_into_testing_by_divit52','../uploads/divit52_testing_divit52_into_testing_by_divit52.mp3','divit52','testing','divit52');
+--
+-- Table structure for table `user`
+--
 
-/*!40000 ALTER TABLE `track` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table user
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user`;
-
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
-  `user_type` int(11) DEFAULT NULL,
-  PRIMARY KEY (`username`)
+  `user_type` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+--
+-- Dumping data for table `user`
+--
 
-INSERT INTO `user` (`username`, `email`, `password`, `first_name`, `last_name`, `user_type`)
-VALUES
-	('divit52','divit52@vt.edu','$2y$10$WbEQHotJq5jhC1uSh/cenOHr9zE9hr4BSV376TU2mFtFxBN/19.py','Divit','Singh',NULL);
+INSERT INTO `user` (`username`, `email`, `password`, `first_name`, `last_name`, `user_type`) VALUES
+('divit52', 'test@test2', '$2y$10$1XG/L8sGkh7g1DnkpE2TluJnmpYwTOzoT1UxIG13zec.m.e8NwGz2', 't', 't', 0),
+('test', 'test@test', '$2y$10$ipjezG1iGOY9M/WZTke3nuAfv9M6G7.J6bSDUiUAvcaaLuoQr4j2i', 'test', 'test', 0);
 
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
+--
+-- Indexes for dumped tables
+--
 
+--
+-- Indexes for table `album`
+--
+ALTER TABLE `album`
+ ADD PRIMARY KEY (`album_owner`,`album_name`);
 
+--
+-- Indexes for table `collaborators`
+--
+ALTER TABLE `collaborators`
+ ADD PRIMARY KEY (`id`);
 
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+--
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `collaborators`
+--
+ALTER TABLE `collaborators`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
