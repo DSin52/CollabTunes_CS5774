@@ -8,8 +8,10 @@ if(isset($_SESSION['username'])) {
 	// if user exists then show their profile, else 404
 	if (User::userExists("username", $user)) {
 		$pageName = 'CollabTunes - '.$user;
+        
 		$albums = Album::getAlbums("album_owner", $user);
 		$curUser = User::publicUserInfo("username", $user);
+        
 		$displayButton = "add";
 		$result = User::isCollaborator($_SESSION['username'], $user);
 		$sentBy = $result['sent_by'];

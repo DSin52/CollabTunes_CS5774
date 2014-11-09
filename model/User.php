@@ -137,8 +137,30 @@ class User {
 				self::DB_TABLE,
 				$username
 				);
+            
+            $query_deleteComments = sprintf("Delete from comment where `username` = '%s'",
+				mysql_real_escape_string($username)
+			);
+            
+            $query_deleteEvents1 = sprintf("Delete from event where `username` = '%s'",
+				mysql_real_escape_string($username)
+			);
+            
+            $query_deleteEvents2 = sprintf("Delete from event where `data` = '%s' and `event_type` = 'add_collaborator2'",
+				mysql_real_escape_string($username)
+			);
+            
+            $query_deleteCollaborators = sprintf("Delete from collaborators where `friend_one` = '%s' or `friend_two` = '%s'",
+				mysql_real_escape_string($username),
+                mysql_real_escape_string($username)
+			);
+            
 			$db = Db::instance();
 			$db->execute($query);
+            $db->execute($query_deleteComments);
+            $db->execute($query_deleteEvents1);
+            $db->execute($query_deleteEvents2);
+            $db->execute($query_deleteCollaborators);
 			return true;
 		} else {
 			return null;
@@ -239,6 +261,8 @@ class User {
 
 			$db->execute($query);
 			$db->execute($query2);
+            
+            return 0;
 		} else {
 			$time = date("Y-m-d H:i:s");
 			$query = sprintf("UPDATE %s SET `%s`='%s', `%s`='%s' WHERE `%s`='%s' and `%s`='%s'",
@@ -266,6 +290,8 @@ class User {
 
 			$db->execute($query);
 			$db->execute($query2);
+            
+            return 1;
 		}
 	}
 
@@ -323,7 +349,7 @@ class User {
 	}
 
 	//Get all collaborators for a user
-	public static function getCollaborators($username) {
+	public static function getCollaborators($username, $status) {
 		$query = sprintf("select * from %s where `%s` = '%s' and `%s`='%s'",
 			'collaborators',
 			'friend_one',
@@ -345,13 +371,23 @@ class User {
 		$result2 = $db->lookup($query2);
 
 		$collabs = array();
-
-		while (($row = mysql_fetch_array($result)) != null) {
-			array_push($collabs, $row);
-		}
-		while (($row2 = mysql_fetch_array($result2)) != null) {
-			array_push($collabs, $row2);
-		}
+        
+        if ($status == 0) {
+            while (($row = mysql_fetch_array($result)) != null) {
+                array_push($collabs, $row);
+            }
+        } else if ($status == 1) {
+            while (($row2 = mysql_fetch_array($result2)) != null) {
+                array_push($collabs, $row2);
+            }
+        } else {
+            while (($row = mysql_fetch_array($result)) != null) {
+			     array_push($collabs, $row);
+            }
+            while (($row2 = mysql_fetch_array($result2)) != null) {
+			     array_push($collabs, $row2);
+            }
+		}   
 		return $collabs;
 	}
 }

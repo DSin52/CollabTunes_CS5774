@@ -92,6 +92,7 @@ $(document).ready(function() {
 				processData:false,
 				success: function(data, textStatus, jqXHR)
 				{
+                    console.log(data);
 					var data = JSON.parse(data);
 					if (data.Error) {
 						$("#createAlbumError").text(data.Error);
@@ -292,6 +293,7 @@ $(document).ready(function() {
 	$("#trackModalButton").click(function() {
 		var location = window.location.pathname.split("/");
 		$("#track_album").val(decodeURI(location[location.length - 1]));
+        $("#album_owner").val(decodeURI(location[location.length - 2]));
 		$("#track_name").val("");
 		$("#track_data").val("");
 	})
@@ -306,10 +308,7 @@ $(document).ready(function() {
 			$("#trackCreateError").text("Please fill the entire form!");
 			return;
 		} else {
-			var location = window.location.pathname.split("/");
-
 			$("#trackForm").submit(function(e) {
-				var formObj = $(this);
 				var formData = new FormData(this);
 
 				$.ajax({
@@ -322,6 +321,7 @@ $(document).ready(function() {
 					processData:false,
 					success: function(data, textStatus, jqXHR)
 					{
+                        console.log(data);
 						var data = JSON.parse(data);
 						if (data.Error) {
 							$("#trackCreateError").text(data.Error);
@@ -356,11 +356,14 @@ $(document).ready(function() {
 
 		var trackName = $(this).val();
 		var trackAlbum = decodeURI(location[location.length - 1]);
+        var albumOwner = decodeURI(location[location.length - 2]);
 
 		$.post("../track/delete", {
 			"track_name": trackName,
-			"track_album": trackAlbum
+			"track_album": trackAlbum,
+            "album_owner": albumOwner
 		}, function (data) {
+            console.log(data);
 			var data = JSON.parse(data);
 			if (data.Error) {trackDeleteError
 				$("#trackDeleteError").text(data.Error);
@@ -383,6 +386,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var location = window.location.pathname.split("/");
 		var trackAlbum = decodeURI(location[location.length - 1]);
+        var albumOwner = decodeURI(location[location.length - 2]);
 		var trackName = $("#new_track").val();
 		var oldTrackName = $("#old_track").val();
 
@@ -393,9 +397,10 @@ $(document).ready(function() {
 		$.post("../track/edit", {
 			"track_name": trackName,
 			"track_album": trackAlbum,
-			"old_track_name": oldTrackName
+			"old_track_name": oldTrackName,
+            "album_owner": albumOwner
 		}, function (data) {
-
+            console.log(data);
 			var data = JSON.parse(data);
 
 			if (data.Error) {
@@ -437,13 +442,15 @@ $(document).ready(function() {
 	//Delete comments from page
 	$(".delete_comment").click(function (e) {
 		var idToDelete = $(this).val().split("_")[2];
-
+        var commentOwner = $(this).val().split("_")[3];
+        
 		$("#" + $(this).val()).remove();
 		$(this).remove();
 		
 
 		$.post("../comment/delete", {
-			id: idToDelete
+			id: idToDelete,
+            commenter: commentOwner
 		});
 	});
 

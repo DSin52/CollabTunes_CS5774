@@ -34,6 +34,16 @@ if (Album::albumExist($properties['album_name'], $_SESSION['username']) != null)
 	$properties['album_image'] = $artwork_path;
 	$newAlbum = new Album($properties);
 	$newAlbum->save();
+    
+    $eventProperties = [
+        'event_type' => 'add_album',
+        'username' => $properties['album_owner'],
+        'data' => $properties['album_name'],
+        'album_name' => $properties['album_name']
+    ];
+    $e = new Event($eventProperties);
+    $e->save();
+    
 	$_SESSION['success'] = "Album Created!";
 }
 echo json_encode($error);

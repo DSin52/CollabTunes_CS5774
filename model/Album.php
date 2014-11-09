@@ -125,21 +125,33 @@ class Album {
 				mysql_real_escape_string($album_owner)
 				);
 			
-			$query_deleteTracks = sprintf("Delete from track where `track_album` = '%s' and `track_owner` = '%s'",
-				mysql_real_escape_string($album_name),
+			$query_deleteTracks = sprintf("Delete from track where `track_owner` = '%s'",
 				mysql_real_escape_string($album_owner)
 			);
 
-			$tracks = Track::getTracks($album_name, $album_owner);
+			$tracks = Track::getTracksByOwner($album_owner);
 			if ($tracks) {
 				foreach ($tracks as $t) {
 					unlink($t['track_path']);
 				}
 			}
+            
+            $query_deleteComments = sprintf("Delete from comment where `album_name` = '%s'",
+				mysql_real_escape_string($album_name)
+			);
+            
+            $query_deleteEvents = sprintf("Delete from event where `album_name` = '%s'",
+				mysql_real_escape_string($album_name)
+			);
+            //delete comments
+            //delete events
 			
 			$db = Db::instance();
 			$db->execute($query_deleteAlbum);
 			$db->execute($query_deleteTracks);
+            $db->execute($query_deleteComments);
+            $db->execute($query_deleteEvents);
+            
 			return true;
 		} else {
 			return null;
@@ -245,6 +257,10 @@ class Album {
     	);
 
     	$db->execute($query);
+        
+        $last_id = mysql_insert_id();
+        
+        return $last_id;
     }
 
     public function getComments() {
@@ -263,16 +279,38 @@ class Album {
     	}
     	return $comments;
     }
+    
+    public function getComment($id) {
+    	$query = sprintf("SELECT * from %s where `id`='%s' ORDER BY `created` DESC",
+    		"comment",
+    		$id
+    	);
+    	
+    	$db = Db::instance();
+    	$result = $db->lookup($query);
+        
+        if(!mysql_num_rows($result)) {
+			return null;
+		} else {
+			$row = mysql_fetch_assoc($result);
+            return $row;
+		}
+    }
 
     public static function deleteComment($id) {
     	$query = sprintf("DELETE FROM %s where `id`= %d",
     		"comment",
     		$id
     	);
-
-    	echo $query;
+        
+        $deleteEventQuery = sprintf("DELETE FROM %s where `data`= %d",
+    		"event",
+    		$id
+    	);
+    	
 
     	$db = Db::instance();
-    	$result = $db->execute($query);
+    	$db->execute($query);
+        $db->execute($deleteEventQuery);
     }
 }

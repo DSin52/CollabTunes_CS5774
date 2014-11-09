@@ -117,8 +117,12 @@
                     <input type="text" class="form-control" id="track_name" name="track_name">
                   </div>
                   <div class="form-group">
-                    <label for="track_name">Album Name</label>
+                    <label for="track_album">Album Name</label>
                     <input type="text" class="form-control" id="track_album" name="track_album" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="album_owner">Album Owner</label>
+                    <input type="text" class="form-control" id="album_owner" name="album_owner" readonly>
                   </div>
                   <div class="form-group">
                     <label for="track_data">Track File (.mp3)</label>
@@ -167,9 +171,8 @@
               ?>
               <li><a href="#" data-src=<?= $path ?>><?= $name ?></a></li>
               <?php } ?> <!-- foreach -->
-
+<?php } ?>
             </ol>
-
             <!-- Tracks editable if logged in user is owner of this album -->
             <?php if($_SESSION['username'] == $curAlbum["album_owner"]) { ?>
             <div class="form-group formButtons">
@@ -177,17 +180,17 @@
               <button type="button" class="btn btn-success edittrack" data-toggle="modal" data-target="#editTrackModal">Edit Track</button>
               <button type="button" class="btn btn-danger deletetrack" data-toggle="modal" data-target="#deleteTrackModal">Delete Track</button>
             </div>
-            <?php } ?> <!-- buttons -->
-          </div>
-          <?php } else { ?> <!-- is_null-->
-          <div class="form-group formButtons">
-            <button type="button" id="trackModalButton" class="btn btn-success" data-toggle="modal" data-target="#trackModal">Add Track</button>
-          </div>
-          <?php }?>
+            <?php } else { ?> <!-- is_null-->
+            <div class="form-group formButtons">
+                <button type="button" id="trackModalButton" class="btn btn-success" data-toggle="modal" data-target="#trackModal">Add Track</button>
+            </div>
+            <?php }?>
+<!--        </div>-->
+            <div class="form-group formButtons">
+              <button type="button" class="btn btn-primary downloadtrack">Download Track</button>
+            </div>
         </div>
-        <div class="form-group formButtons">
-          <button type="button" class="btn btn-primary downloadtrack">Download Track</button>
-        </div>
+<div class="comments">
         <?php
           $i = 0;
           foreach($comments as $comment) {
@@ -196,20 +199,21 @@
             $created = $comment['created'];
             $owner = $comment['album_owner'];
             $comment_id = $comment['id'];
-            $id = "comment_" . $i . "_" . $comment_id;
+            $id = "comment_" . $i . "_" . $comment_id . "_" . $commenter;
             ?>
-            <div class="comments">
+            
 
-              <p class="comment" id=<?= $id ?>><?= $commenter ?> said: <?= $text ?> on <?= $created ?></p>
+              <p class="comment" id="<?= $id ?>"><?= $commenter ?> said: <?= $text ?> on <?= $created ?></p>
               <?php
                 if ($commenter == $_SESSION['username'] || $_SESSION['username'] == $owner) {
                   ?>
-                  <button class="btn btn-danger delete_comment" value=<?= $id ?>>Delete Comment</button>
+                  <button class="btn btn-danger delete_comment" value="<?= $id ?>">Delete Comment</button>
                 <?php } ?>
               
-            </div>
-            <?php $i++;} ?>
-          }
+            
+            <?php $i++; } ?>
+          </div>
+
         <div class="container">
           <div class="row comments">
             <div class="col-md-8">
@@ -219,3 +223,7 @@
               <button type="button" class="btn btn-success" id="comment">Comment</button>
             </div>
           </div>
+</div>
+    
+  </body>
+</html>
