@@ -21,6 +21,7 @@ class User {
 			'password' => '',
 			'first_name' => null,
 			'last_name' => null,
+			'user_type'=>null
 			);
 
 		$args += $defaultArgs;
@@ -30,7 +31,7 @@ class User {
 		$this->password = password_hash($args['password'], PASSWORD_DEFAULT);
 		$this->first_name = $args['first_name'];
 		$this->last_name = $args['last_name'];
-
+		$this->user_type = $args['user_type'];
 	}
 
 	//Creates a new user in the database
@@ -38,7 +39,7 @@ class User {
 		$db = Db::instance();
 
 		if (($curUser = self::doesUserExist("username", $this->username)) != null) {
-			$query = sprintf("update %s (%s = '%s', %s = '%s', %s = '%s', %s = '%s') where `%s` = '%s'",
+			$query = sprintf("update %s (%s = '%s', %s = '%s', %s = '%s', %s = '%s', `%s` = '%s') where `%s` = '%s'",
 				self::DB_TABLE,
 				'email',
 				$this->email,
@@ -48,22 +49,26 @@ class User {
 				$this->first_name,
 				'last_name',
 				$this->last_name,
+				'user_type',
+				$this->user_type,
 				'username',
 				$this->username
 				);
 		} else {
-			$query = sprintf("insert into %s (`%s`, `%s`, `%s`, `%s`, `%s`) values ('%s', '%s', '%s', '%s', '%s')",
+			$query = sprintf("insert into %s (`%s`, `%s`, `%s`, `%s`, `%s`,`%s`) values ('%s', '%s', '%s', '%s', '%s', '%s')",
 				self::DB_TABLE,
 				'email',
 				'username',
 				'password',
 				'first_name',
 				'last_name',
+				'user_type',
 				$this->email,
 				$this->username,
 				$this->password,
 				$this->first_name,
-				$this->last_name
+				$this->last_name,
+				$this->user_type
 				);
 		}
 		$db->execute($query);
@@ -72,6 +77,12 @@ class User {
 	//Local method to check existence, used to access protected variables
 	public function doesUserExist($propertyname, $username) {
 		return self::userExists("username", $username);
+	}
+
+	//Method to check if user has special permissions
+	public static function isSpecial($username) {
+		$specialUser = self::userExists("username", $username);
+		return $specialUser->user_type;
 	}
 
 	//Method to check for user existence
@@ -137,30 +148,30 @@ class User {
 				self::DB_TABLE,
 				$username
 				);
-            
-            $query_deleteComments = sprintf("Delete from comment where `username` = '%s'",
+
+			$query_deleteComments = sprintf("Delete from comment where `username` = '%s'",
 				mysql_real_escape_string($username)
-			);
-            
-            $query_deleteEvents1 = sprintf("Delete from event where `username` = '%s'",
+				);
+
+			$query_deleteEvents1 = sprintf("Delete from event where `username` = '%s'",
 				mysql_real_escape_string($username)
-			);
-            
-            $query_deleteEvents2 = sprintf("Delete from event where `data` = '%s' and `event_type` = 'add_collaborator2'",
+				);
+
+			$query_deleteEvents2 = sprintf("Delete from event where `data` = '%s' and `event_type` = 'add_collaborator2'",
 				mysql_real_escape_string($username)
-			);
-            
-            $query_deleteCollaborators = sprintf("Delete from collaborators where `friend_one` = '%s' or `friend_two` = '%s'",
+				);
+
+			$query_deleteCollaborators = sprintf("Delete from collaborators where `friend_one` = '%s' or `friend_two` = '%s'",
 				mysql_real_escape_string($username),
-                mysql_real_escape_string($username)
-			);
-            
+				mysql_real_escape_string($username)
+				);
+
 			$db = Db::instance();
 			$db->execute($query);
-            $db->execute($query_deleteComments);
-            $db->execute($query_deleteEvents1);
-            $db->execute($query_deleteEvents2);
-            $db->execute($query_deleteCollaborators);
+			$db->execute($query_deleteComments);
+			$db->execute($query_deleteEvents1);
+			$db->execute($query_deleteEvents2);
+			$db->execute($query_deleteCollaborators);
 			return true;
 		} else {
 			return null;
@@ -261,11 +272,11 @@ class User {
 
 			$db->execute($query);
 			$db->execute($query2);
-            
-            return 0;
+
+			return 0;
 		} else {
 			$time = date("Y-m-d H:i:s");
-			$query = sprintf("UPDATE %s SET `%s`='%s', `%s`='%s' WHERE `%s`='%s' and `%s`='%s'",
+			$query = sprintf("UPDATE %s SET `%s`='%s', `%s` = '%s' WHERE `%s`='%s' and `%s`='%s'",
 				'collaborators',
 				'status',
 				1,
@@ -276,7 +287,7 @@ class User {
 				"friend_two",
 				$collab2
 				);
-			$query2 = sprintf("UPDATE %s SET `%s`='%s', `%s`='%s' WHERE `%s`='%s' and `%s`='%s'",
+			$query2 = sprintf("UPDATE %s SET `%s`='%s', `%s` = '%s' WHERE `%s`='%s' and `%s`='%s'",
 				'collaborators',
 				'status',
 				1,
@@ -290,8 +301,8 @@ class User {
 
 			$db->execute($query);
 			$db->execute($query2);
-            
-            return 1;
+
+			return 1;
 		}
 	}
 
@@ -371,22 +382,22 @@ class User {
 		$result2 = $db->lookup($query2);
 
 		$collabs = array();
-        
-        if ($status == 0) {
-            while (($row = mysql_fetch_array($result)) != null) {
-                array_push($collabs, $row);
-            }
-        } else if ($status == 1) {
-            while (($row2 = mysql_fetch_array($result2)) != null) {
-                array_push($collabs, $row2);
-            }
-        } else {
-            while (($row = mysql_fetch_array($result)) != null) {
-			     array_push($collabs, $row);
-            }
-            while (($row2 = mysql_fetch_array($result2)) != null) {
-			     array_push($collabs, $row2);
-            }
+
+		if ($status == 0) {
+			while (($row = mysql_fetch_array($result)) != null) {
+				array_push($collabs, $row);
+			}
+		} else if ($status == 1) {
+			while (($row2 = mysql_fetch_array($result2)) != null) {
+				array_push($collabs, $row2);
+			}
+		} else {
+			while (($row = mysql_fetch_array($result)) != null) {
+				array_push($collabs, $row);
+			}
+			while (($row2 = mysql_fetch_array($result2)) != null) {
+				array_push($collabs, $row2);
+			}
 		}   
 		return $collabs;
 	}

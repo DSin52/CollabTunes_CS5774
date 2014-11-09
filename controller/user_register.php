@@ -8,6 +8,7 @@ $email = $_POST['email'];
 $username = $_POST['username'];
 $password1 = $_POST['password1'];
 $password2 = $_POST['password2'];
+$user_type = $_POST['user_type'];
 
 // do the passwords match?
 if($password1 != $password2) {
@@ -26,8 +27,10 @@ if($password1 != $password2) {
             'username'=> $username, 
             'first_name'=> $fName, 
             'last_name'=> $lName, 
-            'password'=> $password1
+            'password'=> $password1,
+            'user_type'=>$user_type
             );
+
         $newUser = new User($info);
         $newUser->save();
         $_SESSION['success'] = "User Created!";

@@ -36,11 +36,17 @@ $(document).ready(function() {
 		var uName = $(".user").val();
 		var pWord = $(".user_password").val();
 		var vWord = $(".verifypassword").val();
+		var modCode = $("#mod_code").val();
 
 		if (!fName || !lName || !email || !uName || !pWord || !vWord || fName.length == 0 ||
 			lName.length == 0 || email.length == 0 || uName.length == 0 ||
 			pWord.length == 0 || vWord.length == 0) {
 			$("#createAccountError").text("Please fill out the entire form");
+		return;
+	}
+
+	if (uName == "featured") {
+		$("#createAccountError").text("Can't have an account with that username!");
 		return;
 	}
 
@@ -51,6 +57,14 @@ $(document).ready(function() {
 		"username": uName,
 		"password1": pWord,
 		"password2": vWord,
+		"user_type": 0
+	};
+
+	if (modCode.length != 0 && modCode !== 'test') {
+		$("#createAccountError").text("Invalid Moderator code");
+		return;
+	} else if (modCode == 'test') {
+		accountInfo['user_type'] = 1;
 	}
 
 	$.post("./processRegistration", accountInfo, function (data) {
@@ -62,6 +76,7 @@ $(document).ready(function() {
 		}
 	});
 });
+
 
 	//Creates a new album for the user
 	$("#createalbum").click(function(e) {
@@ -92,7 +107,7 @@ $(document).ready(function() {
 				processData:false,
 				success: function(data, textStatus, jqXHR)
 				{
-                    console.log(data);
+					console.log(data);
 					var data = JSON.parse(data);
 					if (data.Error) {
 						$("#createAlbumError").text(data.Error);
@@ -201,9 +216,29 @@ $(document).ready(function() {
 	//Deletes account from database
 	$("#deleteaccountbutton").click(function(e) {
 		e.preventDefault();
-		$.post("./delete", function (data) {
+
+		$.post("./delete", {
+			'delete': $(this).val(),
+			'admin': 0
+		},
+		function (data) {
 			if (data) {
 				window.location.href = "./";
+			}
+		});
+	});
+
+	//Admin account deletion
+	$("#admindeleteaccount").click(function (e) {
+		e.preventDefault();
+
+		$.post("./delete", {
+			'delete': $(this).val(),
+			'admin': 1
+		},
+		function (data) {
+			if (data) {
+				window.location.href = "./featured";
 			}
 		});
 	});
@@ -293,7 +328,7 @@ $(document).ready(function() {
 	$("#trackModalButton").click(function() {
 		var location = window.location.pathname.split("/");
 		$("#track_album").val(decodeURI(location[location.length - 1]));
-        $("#album_owner").val(decodeURI(location[location.length - 2]));
+		$("#album_owner").val(decodeURI(location[location.length - 2]));
 		$("#track_name").val("");
 		$("#track_data").val("");
 	})
@@ -321,7 +356,7 @@ $(document).ready(function() {
 					processData:false,
 					success: function(data, textStatus, jqXHR)
 					{
-                        console.log(data);
+						console.log(data);
 						var data = JSON.parse(data);
 						if (data.Error) {
 							$("#trackCreateError").text(data.Error);
@@ -356,14 +391,14 @@ $(document).ready(function() {
 
 		var trackName = $(this).val();
 		var trackAlbum = decodeURI(location[location.length - 1]);
-        var albumOwner = decodeURI(location[location.length - 2]);
+		var albumOwner = decodeURI(location[location.length - 2]);
 
 		$.post("../track/delete", {
 			"track_name": trackName,
 			"track_album": trackAlbum,
-            "album_owner": albumOwner
+			"album_owner": albumOwner
 		}, function (data) {
-            console.log(data);
+			console.log(data);
 			var data = JSON.parse(data);
 			if (data.Error) {trackDeleteError
 				$("#trackDeleteError").text(data.Error);
@@ -386,7 +421,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var location = window.location.pathname.split("/");
 		var trackAlbum = decodeURI(location[location.length - 1]);
-        var albumOwner = decodeURI(location[location.length - 2]);
+		var albumOwner = decodeURI(location[location.length - 2]);
 		var trackName = $("#new_track").val();
 		var oldTrackName = $("#old_track").val();
 
@@ -398,9 +433,9 @@ $(document).ready(function() {
 			"track_name": trackName,
 			"track_album": trackAlbum,
 			"old_track_name": oldTrackName,
-            "album_owner": albumOwner
+			"album_owner": albumOwner
 		}, function (data) {
-            console.log(data);
+			console.log(data);
 			var data = JSON.parse(data);
 
 			if (data.Error) {
@@ -442,15 +477,15 @@ $(document).ready(function() {
 	//Delete comments from page
 	$(".delete_comment").click(function (e) {
 		var idToDelete = $(this).val().split("_")[2];
-        var commentOwner = $(this).val().split("_")[3];
-        
+		var commentOwner = $(this).val().split("_")[3];
+
 		$("#" + $(this).val()).remove();
 		$(this).remove();
 		
 
 		$.post("../comment/delete", {
 			id: idToDelete,
-            commenter: commentOwner
+			commenter: commentOwner
 		});
 	});
 
