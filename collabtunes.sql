@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.20)
 # Database: collabtunes
-# Generation Time: 2014-11-09 11:11:02 +0000
+# Generation Time: 2014-11-09 22:34:53 +0000
 # ************************************************************
 
 
@@ -57,7 +57,7 @@ CREATE TABLE `collaborators` (
   `friend_one` varchar(100) NOT NULL,
   `friend_two` varchar(100) NOT NULL,
   `status` int(11) NOT NULL,
-  `modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sent_by` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)

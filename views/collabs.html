@@ -2,17 +2,16 @@
       <?php foreach($collabs as $collab) { ?>
 
         <?php if ($collab[2] == 0 && strcmp($collab[5], $_SESSION['username']) != 0) { ?>
-          <br><p><?= $collab[1] ?> Request sent on: <?= $collab[3] ?></p>
+          <br><h4><a href="<?= SERVER_PATH.$collab[1] ?>"> <?= $collab[1] ?> </a> Request sent on: <?= date("M j, g:i a", strtotime($collab[3])) ?></h4>
           <button class="btn btn-success accept_request" value=<?= $collab[1] ?>>Accept Collaboration</button>
           <button class="btn btn-danger deny_request" value=<?= $collab[1] ?>>Deny Collaboration</button>
         <?php } else if ($collab[2] == 0) { ?>
-          <br><p><?= $collab[1] ?> Request sent on: <?= $collab[3] ?></p>
+          <br><h4><a href="<?= SERVER_PATH.$collab[1] ?>"> <?= $collab[1] ?> </a> Request sent on: <?= date("M j, g:i a", strtotime($collab[3])) ?></h4>
           <button class="btn btn-danger deny_request" value=<?= $collab[1] ?>>Cancel Request</button>
         <?php } else { ?>
-          <br><p><?= $collab[1] ?>  Collaborator since: <?= $collab[3] ?></p>
+          <br><h4><a href="<?= SERVER_PATH.$collab[1] ?>"> <?= $collab[1] ?> </a>  Collaborator since: <?= date("M j, g:i a", strtotime($collab[3])) ?></h4>
           <button class="btn btn-danger deny_request" value=<?= $collab[1] ?>>Uncollaborate</button>
         <?php } ?>
-
       <?php } ?>
 
     </div>

@@ -250,32 +250,27 @@ class User {
 		if (!mysql_num_rows($result) && !mysql_num_rows($result2)) {
 			//Need to insert twice because it is bidirectional and collaborator
 			//might be either in friend_one or friend_two location
-			$time = date("Y-m-d H:i:s");
-			$query = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`, `%s`) values('%s', '%s', '%s', '%s', '%s')",
+			$query = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`) values('%s', '%s', '%s', '%s')",
 				'collaborators',
 				'friend_one',
 				'friend_two',
 				'status',
-				'modified',
 				'sent_by',
 				$collab1,
 				$collab2,
 				0,
-				$time,
 				$collab1
 				);
 
-			$query2 = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`, `%s`) values('%s', '%s', '%s', '%s', '%s')",
+			$query2 = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`) values('%s', '%s', '%s', '%s')",
 				'collaborators',
 				'friend_one',
 				'friend_two',
 				'status',
-				'modified',
 				'sent_by',
 				$collab2,
 				$collab1,
 				0,
-				$time,
 				$collab1
 				);
 
@@ -284,24 +279,19 @@ class User {
 
 			return 0;
 		} else {
-			$time = date("Y-m-d H:i:s");
-			$query = sprintf("UPDATE %s SET `%s`='%s', `%s` = '%s' WHERE `%s`='%s' and `%s`='%s'",
+			$query = sprintf("UPDATE %s SET `%s`='%s' WHERE `%s`='%s' and `%s`='%s'",
 				'collaborators',
 				'status',
 				1,
-				'modified',
-				$time,
 				"friend_one",
 				$collab1,
 				"friend_two",
 				$collab2
 				);
-			$query2 = sprintf("UPDATE %s SET `%s`='%s', `%s` = '%s' WHERE `%s`='%s' and `%s`='%s'",
+			$query2 = sprintf("UPDATE %s SET `%s`='%s' WHERE `%s`='%s' and `%s`='%s'",
 				'collaborators',
 				'status',
 				1,
-				'modified',
-				$time,
 				"friend_one",
 				$collab2,
 				"friend_two",
