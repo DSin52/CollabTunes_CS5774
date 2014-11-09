@@ -1,4 +1,12 @@
 $(document).ready(function() {
+    
+    //Press enter to login
+    $("#password").keyup(function(event){
+            if(event.keyCode == 13){
+                $("#login").click();
+            }
+        });
+    
 	//Log In functionality
 	$("#login").click(function () {
 		var username = $("#username").val();
@@ -23,7 +31,7 @@ $(document).ready(function() {
 			if (data) {
 				$("#logInError").text(data);
 			} else {
-				window.location.href = './' + username;
+				window.location.href = './community';
 			}
 		});
 	});
@@ -37,15 +45,18 @@ $(document).ready(function() {
 		var pWord = $(".user_password").val();
 		var vWord = $(".verifypassword").val();
 		var modCode = $("#mod_code").val();
-
+        var favoriteGenre = $("#favoriteGenre").val();
+        
+        console.log(favoriteGenre);
 		if (!fName || !lName || !email || !uName || !pWord || !vWord || fName.length == 0 ||
 			lName.length == 0 || email.length == 0 || uName.length == 0 ||
-			pWord.length == 0 || vWord.length == 0) {
-			$("#createAccountError").text("Please fill out the entire form");
-		return;
-	}
+			pWord.length == 0 || vWord.length == 0 || favoriteGenre == "Select a genre...") {
+			
+            $("#createAccountError").text("Please fill out the entire form");
+		    return;
+	   }
 
-	if (uName == "featured") {
+	if (uName == "community") {
 		$("#createAccountError").text("Can't have an account with that username!");
 		return;
 	}
@@ -57,7 +68,8 @@ $(document).ready(function() {
 		"username": uName,
 		"password1": pWord,
 		"password2": vWord,
-		"user_type": 0
+		"user_type": 0,
+        "favorite_genre": favoriteGenre
 	};
 
 	if (modCode.length != 0 && modCode !== 'test') {
@@ -209,6 +221,7 @@ $(document).ready(function() {
 				$("#lastname").val(curUser["last_name"]);
 				$("#email").val(curUser["email"]);
 				$("#user").val(curUser["username"]);
+                $("#favoriteGenre").val(curUser["favorite_genre"]);
 			}
 		});		
 	});
@@ -252,6 +265,7 @@ $(document).ready(function() {
 		var user = $("#user").val();
 		var pW = $("#user_password").val();
 		var verPW = $("#verify_password").val();
+        var favoriteGenre = $("#favoriteGenre").val();
 
 		var hasEmailChanged = false;
 
@@ -260,8 +274,9 @@ $(document).ready(function() {
 				hasEmailChanged = true;
 			}
 		});
+        
 
-		if (fName.length == 0 || lName.length == 0 || email.length == 0 || user.length == 0) {
+		if (fName.length == 0 || lName.length == 0 || email.length == 0 || user.length == 0 || favoriteGenre == "Select a genre...") {
 			$("#editProfileError").text("All values except Password and Verify Password are mandatory!");
 			return;
 		}
@@ -275,6 +290,7 @@ $(document).ready(function() {
 			var updatedInformation = {
 				"first_name": fName,
 				"last_name": lName,
+                "favorite_genre": favoriteGenre
 			};
 
 			if (pW) {
@@ -284,6 +300,7 @@ $(document).ready(function() {
 			if (hasEmailChanged) {
 				updatedInformation['email'] = email;
 			}
+            
 			
 			$.post("./updateUser", updatedInformation, function (data) {
 				if (data) {
@@ -316,11 +333,11 @@ $(document).ready(function() {
 	$("#genre_select").change(function() {
 		var selected =  $(this).children(":selected").text();
 
-		if (window.location.href.indexOf("featured/") > -1) {
+		if (window.location.href.indexOf("community/") > -1) {
 			window.location.href = encodeURIComponent(selected);
 		}
 		else {
-			window.location.href = "./featured/" + encodeURIComponent(selected);
+			window.location.href = "./community/" + encodeURIComponent(selected);
 		}
 	});
 
@@ -462,8 +479,7 @@ $(document).ready(function() {
 			var path = location.pathname.split("/");
 			var albumOwner = path[path.length - 2];
 			var albumName = path[path.length - 1];
-			console.log("Album Owner: " + albumOwner);
-			console.log("Album Name: " + albumName);
+            
 			$.post("../comment", {
 				"album_owner": albumOwner,
 				"album_name": albumName,

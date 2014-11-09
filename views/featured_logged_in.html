@@ -1,6 +1,21 @@
     <div class="container-fluid">
-      <div class="col-md-12 main">
-        <h1 class="page-header">Featured</h1>
+      <div class="col-md-4 me">
+        <h3 style="text-align: left;">Collaborator Feed</h3>
+          <ul>
+            <?php 
+            $collaborators = User::getCollaborators($_SESSION['username'], 1);
+
+            foreach($collaborators as $c) {
+                $events = Event::getEvents('username', $c[1]);
+                foreach ($events as $e) {
+                    renderEvent($e, $_SESSION['username']);
+                }
+            } ?>
+        </ul>
+      </div>
+        
+      <div class="col-md-8 main">
+        <h1 class="page-header">Community</h1>
         
         <!-- Populates the genres dropdown menu. -->
         <?php if(!is_null($genres)){ ?>

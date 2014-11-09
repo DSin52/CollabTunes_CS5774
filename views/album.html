@@ -139,7 +139,8 @@
         </div>
 
         <!-- PHP To embed album and track information for the user -->
-        <h1><?=$curAlbum["album_owner"]?> - <?=$curAlbum["album_name"]?></h1>
+        
+        <h1><a href="<?=SERVER_PATH.$curAlbum['album_owner']?>"> <?=$curAlbum["album_owner"]?> </a> - <?=$curAlbum["album_name"]?></h1>
         <div id="albumImageDiv">
           <img src="<?=$curAlbum["album_image"]?>" class="img-rounded" id="albumImage">
         </div>
@@ -207,12 +208,13 @@
               ?>
 
 
-              <p class="comment" id="<?= $id ?>"><?= $commenter ?> said: <?= $text ?> on <?= $created ?></p>
               <?php
-              if ($commenter == $_SESSION['username'] || $_SESSION['username'] == $owner || User::isSpecial($_SESSION['username']) > 0) {
+                    if ($commenter == $_SESSION['username'] || $_SESSION['username'] == $owner || User::isSpecial($_SESSION['username']) > 0) {
                 ?>
-                <button class="btn btn-danger delete_comment" value="<?= $id ?>">Delete Comment</button>
+                        <button class="btn btn-danger delete_comment" value="<?= $id ?>">Delete Comment</button>
                 <?php } ?>
+              <p class="comment" id="<?= $id ?>"><?= "<a href=".SERVER_PATH.$commenter.">".$commenter."</a>" ?> said: <?= $text ?> on <?= date("M j, g:i a", strtotime($created)) ?></p> <br/><br/>
+                
 
 
                 <?php $i++; } ?>

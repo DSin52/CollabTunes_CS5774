@@ -1,6 +1,6 @@
 body {
 /*	background-color: #404040;*/
-    background-color: #cbcbcb;
+    background-color: #bdc3c7;
 }
 
 p.error {
@@ -325,10 +325,16 @@ div.play-pause p { margin-left: -6px; }
 }
 
 .comments {
-	background-color: white;
 	font-size: 20px;
 }
 
 .comment {
-	padding: 25px;
+	padding: 20px;
+    margin-bottom: 0px;
+    display: inline;
+}
+
+ul {
+    padding-left: 10px;
+    font-size: 1.3em;
 }

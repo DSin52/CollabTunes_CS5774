@@ -240,20 +240,18 @@ class Album {
         }
     }
 
-    public static function comment($album_name, $album_owner, $comment, $username, $time) {
+    public static function comment($album_name, $album_owner, $comment, $username) {
     	$db = Db::instance();
-        $query = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`, `%s`) values (\"%s\", '%s', '%s', '%s', '%s')",
+        $query = sprintf("INSERT INTO %s (`%s`, `%s`, `%s`, `%s`) values (\"%s\", '%s', '%s', '%s')",
     		"comment",
     		"album_name",
     		"album_owner",
     		"text",
     		"username",
-    		"created",
     		mysql_real_escape_string($album_name),
     		mysql_real_escape_string($album_owner),
     		mysql_real_escape_string($comment),
-    		mysql_real_escape_string($username),
-    		$time
+    		mysql_real_escape_string($username)
     	);
 
     	$db->execute($query);

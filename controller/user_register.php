@@ -9,6 +9,7 @@ $username = $_POST['username'];
 $password1 = $_POST['password1'];
 $password2 = $_POST['password2'];
 $user_type = $_POST['user_type'];
+$favorite_genre = $_POST['favorite_genre'];
 
 // do the passwords match?
 if($password1 != $password2) {
@@ -28,7 +29,8 @@ if($password1 != $password2) {
             'first_name'=> $fName, 
             'last_name'=> $lName, 
             'password'=> $password1,
-            'user_type'=>$user_type
+            'user_type'=>$user_type,
+            'favorite_genre' => $favorite_genre
             );
 
         $newUser = new User($info);

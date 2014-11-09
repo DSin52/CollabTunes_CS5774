@@ -6,9 +6,8 @@ $album_owner = $_POST['album_owner'];
 $album_name = urldecode($_POST['album_name']);
 $currentCommenter = $_SESSION['username'];
 $comment = $_POST['comment'];
-$timeStamp = date("Y-m-d H:i:s");
 
-$id = Album::comment($album_name, $album_owner, $comment, $currentCommenter, $timeStamp);
+$id = Album::comment($album_name, $album_owner, $comment, $currentCommenter);
 
 $eventProperties = [
     'event_type' => 'add_comment',

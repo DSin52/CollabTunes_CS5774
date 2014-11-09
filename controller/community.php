@@ -1,7 +1,7 @@
 <?php
 require_once '../global.php';
 
-$pageName = 'CollabTunes - Featured';
+$pageName = 'CollabTunes - Community';
 $genres = Album::getGenres();
 
 //Gets all albums for the specified genre

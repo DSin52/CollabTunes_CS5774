@@ -15,30 +15,6 @@
 
       <?php } ?>
 
-
-    <ul>
-    My Feed
-    <?php 
-    $events = Event::getEvents('username', $_SESSION['username']);
-    foreach($events as $e) {
-        renderEvent($e, $_SESSION['username']);
-    } ?>
-        
-    </ul>
-
-    <ul>
-        Collaborator Feed
-    <?php 
-    $collaborators = User::getCollaborators($_SESSION['username'], 1);
-    
-    foreach($collaborators as $c) {
-        $events = Event::getEvents('username', $c[1]);
-        foreach ($events as $e) {
-            renderEvent($e, $_SESSION['username']);
-        }
-    } ?>
-    </ul>
-
     </div>
   </body>
 </html>

@@ -13,6 +13,7 @@ class User {
 	protected $password;
 	protected $first_name;
 	protected $last_name;
+    protected $favorite_genre;
 
 	public function __construct($args = array()) {
 		$defaultArgs = array(
@@ -21,7 +22,8 @@ class User {
 			'password' => '',
 			'first_name' => null,
 			'last_name' => null,
-			'user_type'=>null
+			'user_type'=>null,
+            'favorite_genre' => ''
 			);
 
 		$args += $defaultArgs;
@@ -32,6 +34,7 @@ class User {
 		$this->first_name = $args['first_name'];
 		$this->last_name = $args['last_name'];
 		$this->user_type = $args['user_type'];
+        $this->favorite_genre = $args['favorite_genre'];
 	}
 
 	//Creates a new user in the database
@@ -39,7 +42,7 @@ class User {
 		$db = Db::instance();
 
 		if (($curUser = self::doesUserExist("username", $this->username)) != null) {
-			$query = sprintf("update %s (%s = '%s', %s = '%s', %s = '%s', %s = '%s', `%s` = '%s') where `%s` = '%s'",
+			$query = sprintf("update %s (%s = '%s', %s = '%s', %s = '%s', %s = '%s', `%s` = '%s', `%s` = '%s') where `%s` = '%s'",
 				self::DB_TABLE,
 				'email',
 				$this->email,
@@ -51,6 +54,8 @@ class User {
 				$this->last_name,
 				'user_type',
 				$this->user_type,
+                'favorite_genre',
+                $this->favorite_genre,
 				'username',
 				$this->username
 				);
@@ -63,12 +68,14 @@ class User {
 				'first_name',
 				'last_name',
 				'user_type',
+                'favorite_genre',
 				$this->email,
 				$this->username,
 				$this->password,
 				$this->first_name,
 				$this->last_name,
-				$this->user_type
+				$this->user_type,
+                $this->favorite_genre
 				);
 		}
 		$db->execute($query);
@@ -114,7 +121,9 @@ class User {
 				"email" => $user->email,
 				"username" => $user->username,
 				"first_name" => $user->first_name,
-				"last_name" => $user->last_name
+				"last_name" => $user->last_name,
+                "user_type" => $user->user_type,
+                "favorite_genre" => $user->favorite_genre
 				);
 			return $information;
 		} else {

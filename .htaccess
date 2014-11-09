@@ -31,10 +31,9 @@ RewriteRule ^track/edit$ controller/track_edit.php
 RewriteRule ^track/download/(.*)?$ controller/track_download.php?p=$1
 
 
-RewriteRule ^featured/?$ controller/featured.php
-RewriteRule ^featured/(.*)?$ controller/featured.php?g=$1
+RewriteRule ^community/?$ controller/community.php
+RewriteRule ^community/(.*)?$ controller/community.php?g=$1
 
-RewriteRule ^labview/?$ controller/labview.php
 RewriteRule ^collabs/?$ controller/collabs.php
 
 RewriteRule ^([a-zA-Z0-9]+)/?$ controller/home.php?u=$1

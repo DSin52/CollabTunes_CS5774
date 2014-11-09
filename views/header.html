@@ -107,6 +107,17 @@
               <input type="password" class="form-control verifypassword" id="verifypassword" placeholder="Enter Password">
             </div>
             <div class="form-group">
+              <label for="genre">Favorite Genre</label>
+                <select class="form-control" id="favoriteGenre">
+                    <option>Select a genre...</option>
+                    <option>Rap</option>
+                    <option>Pop</option>
+                    <option>Electronic</option>
+                    <option>Rock</option>
+                    <option>Country</option>
+                </select>
+            </div>
+            <div class="form-group">
               <label for="special">Admin/Moderator Code</label>
               <input type="text" class="form-control" id="mod_code" placeholder="Enter code if given one">
             </div>
@@ -145,13 +156,12 @@
               <!-- Buttons/tab links when logged in are different than logged out -->
               <?php if(isset($_SESSION['username'])) { ?>
 
-              <a class="navbar-brand" href="<?=SERVER_PATH.$_SESSION['username']?>">CollabTunes</a>
+              <a class="navbar-brand" href="<?=SERVER_PATH?>community">CollabTunes</a>
             </div>
             <div class="collapse navbar-collapse" id="form_content" ng-controller="HeaderController">
               <ul class="nav navbar-nav">
-                <li <?=echoActiveClassIfRequestMatches("featured")?>><a href="<?=SERVER_PATH?>featured">Featured</a></li>
+                <li <?=echoActiveClassIfRequestMatches("community")?>><a href="<?=SERVER_PATH?>community">Community</a></li>
                 <li <?=echoActiveClassIfRequestMatches($_SESSION['username'])?>><a href="<?=SERVER_PATH.$_SESSION['username']?>">My Music</a></li>
-                <li <?=echoActiveClassIfRequestMatches("labview")?>><a href="<?=SERVER_PATH?>labview">Lab</a></li>
                 <li <?=echoActiveClassIfRequestMatches("collabs")?>><a href="<?=SERVER_PATH?>collabs">Collaborators</a></li>
               </ul>
               <!-- Log out functionality -->
@@ -167,7 +177,7 @@
             </div>
             <div class="navbar-collapse collapse" id="form_content">
               <ul class="nav navbar-nav">
-                <li><a href="<?=SERVER_PATH ?>featured">Featured</a></li>
+                <li><a href="<?=SERVER_PATH ?>community">Community</a></li>
               </ul>
               <!-- Log in and Create functionality -->
               <form class="navbar-form navbar-right">
