@@ -18,6 +18,8 @@ RewriteRule ^comment$ controller/comment_add.php
 RewriteRule ^collaborate$ controller/collaborate.php
 RewriteRule ^uncollaborate$ controller/uncollaborate.php
 
+RewriteRule ^promote$ controller/promote.php
+RewriteRule ^demote$ controller/demote.php
 
 
 RewriteRule ^album/create$ controller/album_create.php

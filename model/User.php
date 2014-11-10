@@ -400,4 +400,32 @@ class User {
 		}   
 		return $collabs;
 	}
+
+	//Promotes a regular user to a moderator
+	public static function promoteUser($username) {
+		if (self::userExists("username", $username)) {
+			$query = sprintf("update user set `%s`='%s' where `%s`='%s'",
+				'user_type',
+				'1',
+				'username',
+				$username
+			);
+			$db = Db::instance();
+			$db->execute($query);
+		}
+	}
+
+	//Demotes a moderator to a regular user
+	public static function demoteUser($username) {
+		if (self::userExists("username", $username)) {
+			$query = sprintf("update user set `%s`='%s' where `%s`='%s'",
+				'user_type',
+				'0',
+				'username',
+				$username
+			);
+			$db = Db::instance();
+			$db->execute($query);
+		}
+	}
 }

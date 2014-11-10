@@ -541,6 +541,7 @@ $(document).ready(function() {
 		});
 	});
 
+	//Accepts a collaboration request
 	$(".accept_request").click(function (e) {
 		var userCollab = $(this).val();
 
@@ -551,11 +552,34 @@ $(document).ready(function() {
 		});
 	});
 
+	//Denies collaboration request
 	$(".deny_request").click(function (e) {
 		var cancelCollab = $(this).val();
 
 		$.post("./uncollaborate", {
 			"collaborator": cancelCollab
+		}, function (data) {
+			location.reload();
+		});
+	});
+
+	//promotes regular user to moderator
+	$("#admin_promote").click(function (e) {
+		var promoteUser = $(this).val();
+
+		$.post("./promote", {
+			"promote": promoteUser
+		}, function (data) {
+			location.reload();
+		});
+	});
+
+	//demotes moderator to regular user
+	$("#admin_demote").click(function (e) {
+		var demoteUser = $(this).val();
+
+		$.post("./demote", {
+			"demote": demoteUser
 		}, function (data) {
 			location.reload();
 		});

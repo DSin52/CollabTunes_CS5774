@@ -1,35 +1,43 @@
     <div class="container-fluid">
       <div class="col-md-3 me">
-          <?php if ($curUser['user_type'] == 1) { ?>
-            <h1 style="text-align: left;"><?=$user." (Moderator)"?></h1>
-          <?php } else if ($curUser['user_type'] == 2) { ?>
-            <h1 style="text-align: left;"><?=$user." (Admin)"?></h1>
-          <?php } else { ?>
-            <h1 style="text-align: left;"><?=$user?></h1>
-          <?php } ?>
+        <?php if ($curUser['user_type'] == 1) { ?>
+        <h1 style="text-align: left;"><?=$user." (Moderator)"?></h1>
+        <?php } else if ($curUser['user_type'] == 2) { ?>
+        <h1 style="text-align: left;"><?=$user." (Admin)"?></h1>
+        <?php } else { ?>
+        <h1 style="text-align: left;"><?=$user?></h1>
+        <?php } ?>
         <!-- Only able to edit profile if logged in user is on his/her own page. -->
         <?php if($_SESSION['username'] == $user) { ?>
         <button type="button" class="btn btn-success profile" data-toggle="modal" data-target="#editModal">Edit Profile</button>
         <?php } else if (strcmp($displayButton, "add") == 0) { ?>
         <button type="button" class="btn btn-success" id="collaborate">Add As Collaborator</button>
         <?php } else if (strcmp($displayButton, "sent") == 0) { ?>
-        <button type="button" class="btn btn-success" id="uncollaborate">Cancel Collab Request</button>
+        <button type="button" class="btn btn-danger" id="uncollaborate">Cancel Collab Request</button>
         <?php } else if (strcmp($displayButton, "waiting") == 0) { ?>
         <button type="button" class="btn btn-success" id="accept" >Accept Request</button>
         <?php } else { ?>
-        <button type="button" class="btn btn-success" id="uncollaborate">Uncollaborate</button>
+        <button type="button" class="btn btn-danger" id="uncollaborate">Uncollaborate</button>
         <?php } ?>
         <?php if ($_SESSION['username'] != $user && User::isSpecial($_SESSION['username']) == 2) { ?>
+        <!-- <button type="button" class="btn btn-danger" id="admindeleteaccount" value=<?= $user ?>>Delete Account</button> -->
+        <?php if ($curUser['user_type'] == 0) { ?>
+        <button type="button" class="btn btn-success" id="admin_promote" value=<?= $user ?>>Promote to Moderator</button>
+        <?php } else if ($curUser['user_type'] == 1) { ?>
+        <button type="button" class="btn btn-danger" id="admin_demote" value=<?= $user ?>>Demote to Normal User</button>
+        <?php } ?>
+        <?php if ($curUser['user_type'] != 2) { ?>
         <button type="button" class="btn btn-danger" id="admindeleteaccount" value=<?= $user ?>>Delete Account</button>
+        <?php } ?>
         <?php } ?>
         <h3 class="prof"><?= $curUser['first_name']." ".$curUser['last_name']. " - ". $curUser['favorite_genre'] ?></h3>
         
         <ul>
-            <?php 
-            $events = Event::getEvents('username', $_SESSION['username']);
-            foreach($events as $e) {
-                renderEvent($e, $_SESSION['username']);
-            } ?>
+          <?php 
+          $events = Event::getEvents('username', $_SESSION['username']);
+          foreach($events as $e) {
+            renderEvent($e, $_SESSION['username']);
+          } ?>
         </ul>
       </div>
 
@@ -68,15 +76,15 @@
                   <input type="password" class="form-control user_password" id="verify_password" name="verify_password">
                 </div>
                 <div class="form-group">
-                    <label for="genre">Favorite Genre</label>
-                    <select class="form-control" id="favoriteGenre">
-                        <option>Select a genre...</option>
-                        <option>Rap</option>
-                        <option>Pop</option>
-                        <option>Electronic</option>
-                        <option>Rock</option>
-                        <option>Country</option>
-                    </select>
+                  <label for="genre">Favorite Genre</label>
+                  <select class="form-control" id="favoriteGenre">
+                    <option>Select a genre...</option>
+                    <option>Rap</option>
+                    <option>Pop</option>
+                    <option>Electronic</option>
+                    <option>Rock</option>
+                    <option>Country</option>
+                  </select>
                 </div>
                 <div class="form-group formButtons">
                   <button class="btn btn-success" name="updateaccount" id="updateaccount">Update Account</button>
