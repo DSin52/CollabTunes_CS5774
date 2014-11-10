@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.20)
 # Database: collabtunes
-# Generation Time: 2014-11-09 22:34:53 +0000
+# Generation Time: 2014-11-10 21:39:06 +0000
 # ************************************************************
 
 
@@ -68,8 +68,6 @@ LOCK TABLES `collaborators` WRITE;
 
 INSERT INTO `collaborators` (`friend_one`, `friend_two`, `status`, `modified`, `id`, `sent_by`)
 VALUES
-	('schadha','divit52',1,'2014-11-09 14:50:12',7,'schadha'),
-	('divit52','schadha',1,'2014-11-09 14:50:12',8,'schadha'),
 	('test','divit52',1,'2014-11-09 14:54:15',9,'test'),
 	('divit52','test',1,'2014-11-09 14:54:15',10,'test');
 
@@ -99,8 +97,16 @@ INSERT INTO `comment` (`username`, `album_name`, `text`, `album_owner`, `created
 VALUES
 	('schadha','Test Album Sanchit','Test','schadha','2014-11-09 10:56:30',9),
 	('schadha','Test Album Sanchit','Test3','schadha','2014-11-09 11:00:30',11),
-	('schadha','test2','Testing','schadha','2014-11-09 11:00:56',12),
-	('schadha','Test Album Divit','Testing','divit52','2014-11-09 11:01:02',13);
+	('schadha','Test Album Divit','Testing','divit52','2014-11-09 11:01:02',13),
+	('schadha','Test Album Sanchit','1','schadha','2014-11-10 21:34:54',14),
+	('schadha','Test Album Sanchit','2','schadha','2014-11-10 21:36:26',15),
+	('schadha','Test Album Sanchit','3','schadha','2014-11-10 21:36:28',16),
+	('schadha','Test Album Sanchit','4','schadha','2014-11-10 21:36:29',17),
+	('schadha','Test Album Sanchit','5','schadha','2014-11-10 21:36:30',18),
+	('schadha','Test Album Sanchit','6','schadha','2014-11-10 21:36:32',19),
+	('schadha','Test Album Sanchit','7','schadha','2014-11-10 21:36:33',20),
+	('schadha','Test Album Sanchit','8','schadha','2014-11-10 21:36:35',21),
+	('schadha','Test Album Sanchit','9','schadha','2014-11-10 21:36:38',22);
 
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -124,18 +130,24 @@ LOCK TABLES `event` WRITE;
 
 INSERT INTO `event` (`event_type`, `username`, `data`, `album_name`, `when_happened`)
 VALUES
-	('add_collaborator1','schadha','divit52','','2014-11-09 08:50:12'),
-	('add_collaborator2','divit52','schadha','','2014-11-09 08:50:12'),
 	('add_album','divit52','Test Album Divit','Test Album Divit','2014-11-09 08:51:38'),
 	('add_album','schadha','Test Album Sanchit','Test Album Sanchit','2014-11-09 08:53:02'),
 	('add_album','test','Test Album Test','Test Album Test','2014-11-09 08:53:57'),
 	('add_collaborator1','test','divit52','','2014-11-09 08:54:15'),
 	('add_collaborator2','divit52','test','','2014-11-09 08:54:15'),
-	('add_track','schadha','Test Track','Test Album Sanchit,schadha','2014-11-09 09:39:26'),
 	('add_album','schadha','test2','test2','2014-11-09 09:57:03'),
 	('add_comment','schadha','11','Test Album Sanchit','2014-11-09 11:00:30'),
-	('add_comment','schadha','12','test2','2014-11-09 11:00:56'),
-	('add_comment','schadha','13','Test Album Divit','2014-11-09 11:01:03');
+	('add_comment','schadha','13','Test Album Divit','2014-11-09 11:01:03'),
+	('add_comment','schadha','14','Test Album Sanchit','2014-11-10 21:34:54'),
+	('add_comment','schadha','15','Test Album Sanchit','2014-11-10 21:36:26'),
+	('add_comment','schadha','16','Test Album Sanchit','2014-11-10 21:36:28'),
+	('add_comment','schadha','17','Test Album Sanchit','2014-11-10 21:36:29'),
+	('add_comment','schadha','18','Test Album Sanchit','2014-11-10 21:36:30'),
+	('add_comment','schadha','19','Test Album Sanchit','2014-11-10 21:36:32'),
+	('add_comment','schadha','20','Test Album Sanchit','2014-11-10 21:36:33'),
+	('add_comment','schadha','21','Test Album Sanchit','2014-11-10 21:36:35'),
+	('add_comment','schadha','22','Test Album Sanchit','2014-11-10 21:36:38'),
+	('add_track','schadha','Testing','Test Album Sanchit,schadha','2014-11-10 21:37:01');
 
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -159,7 +171,7 @@ LOCK TABLES `track` WRITE;
 
 INSERT INTO `track` (`track_name`, `track_path`, `track_owner`, `track_album`, `album_owner`)
 VALUES
-	('Test Track','../uploads/schadha_Test_Album_Sanchit_Test_Track.mp3','schadha','Test Album Sanchit','schadha');
+	('Testing','../uploads/schadha_Test_Album_Sanchit_Testing.mp3','schadha','Test Album Sanchit','schadha');
 
 /*!40000 ALTER TABLE `track` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -188,6 +200,7 @@ INSERT INTO `user` (`username`, `email`, `password`, `first_name`, `last_name`, 
 VALUES
 	('divit52','test@test2','$2y$10$1XG/L8sGkh7g1DnkpE2TluJnmpYwTOzoT1UxIG13zec.m.e8NwGz2','Divit','Singh',0,'Rap'),
 	('schadha','schadha@vt.edu','$2y$10$XamgzJzAqSrP4KcHm8PvuuRVx0/LI5Hc9N/eEpciyYLqtHpMZrRCi','Sanchit','Chadha',1,'Rap'),
+	('schadha2','test2@test2.com','$2y$10$0bdWBANX8nH4RGBMMv1W5eeqOgL6P21PJBd7rS0/OEOAxEipd0BB2','Sanchit','Chadha',0,'Electronic'),
 	('test','test@test','$2y$10$ipjezG1iGOY9M/WZTke3nuAfv9M6G7.J6bSDUiUAvcaaLuoQr4j2i','test','test',0,'Rap');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
