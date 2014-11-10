@@ -60,7 +60,7 @@ class User {
 				$this->username
 				);
 		} else {
-			$query = sprintf("insert into %s (`%s`, `%s`, `%s`, `%s`, `%s`,`%s`) values ('%s', '%s', '%s', '%s', '%s', '%s')",
+			$query = sprintf("insert into %s (`%s`, `%s`, `%s`, `%s`, `%s`,`%s`,`%s`) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
 				self::DB_TABLE,
 				'email',
 				'username',

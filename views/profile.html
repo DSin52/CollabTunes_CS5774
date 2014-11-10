@@ -2,9 +2,11 @@
       <div class="col-md-3 me">
           <?php if ($curUser['user_type'] == 1) { ?>
             <h1 style="text-align: left;"><?=$user." (Moderator)"?></h1>
+          <?php } else if ($curUser['user_type'] == 2) { ?>
+            <h1 style="text-align: left;"><?=$user." (Admin)"?></h1>
           <?php } else { ?>
             <h1 style="text-align: left;"><?=$user?></h1>
-          <?php }?>
+          <?php } ?>
         <!-- Only able to edit profile if logged in user is on his/her own page. -->
         <?php if($_SESSION['username'] == $user) { ?>
         <button type="button" class="btn btn-success profile" data-toggle="modal" data-target="#editModal">Edit Profile</button>
