@@ -167,6 +167,9 @@ h1 {
 .placeholders {
 	margin-top: 40px;
 	padding-bottom: 20px;
+    height:67vh;
+/*    width:100%;*/
+    overflow-y:scroll;
 }
 
 .temp_log_off {
@@ -372,7 +375,7 @@ div.play-pause p { margin-left: -6px; }
 }
 
 .delete_comment {
-/*    margin-top: 10px;*/
+    
 }
 
 #comment_area {
@@ -388,12 +391,19 @@ div.play-pause p { margin-left: -6px; }
     width:100%;
     overflow-y:scroll;
     margin-top: 20px;
+    padding-top: 5px;
 }
 
 .comment {
 /*	padding: 20px;*/
 /*    margin-top: 10px;*/
     display: inline;
+    
+    background-color: white;
+    margin-right: 7px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 15px;
 }
 
 .trackButtons {

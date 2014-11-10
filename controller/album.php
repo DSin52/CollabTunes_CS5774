@@ -9,8 +9,8 @@ if(isset($_SESSION['username'])) {
 	// If album exists, then show its page, if not then 404
 	if (($curAlbum = Album::albumExist($album, $uri[sizeof($uri)-2]))) {
 		
-		$comments = $curAlbum->getComments();
 		$curAlbum =  Album::getInfoByAlbum($curAlbum);
+        $comments = Comment::getComments($curAlbum['album_name'], $curAlbum['album_owner']);
 		$pageName = 'CollabTunes - ' . $uri[sizeof($uri)-3];
 		$tracks = Track::getTracks($album, $uri[sizeof($uri)-2]);
 		require_once '../views/header.html';

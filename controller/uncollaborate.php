@@ -4,7 +4,7 @@ require_once '../global.php';
 
 $cancel_request = $_POST['collaborator'];
 
-User::removeCollaborator($_SESSION['username'], $cancel_request);
+Collaborator::removeCollaborator($_SESSION['username'], $cancel_request);
 
 Event::deleteEvent($_SESSION['username'], 'add_collaborator1', $cancel_request);
 Event::deleteEvent($_SESSION['username'], 'add_collaborator2', $cancel_request);

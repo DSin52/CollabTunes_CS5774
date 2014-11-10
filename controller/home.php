@@ -13,7 +13,7 @@ if(isset($_SESSION['username'])) {
 		$curUser = User::publicUserInfo("username", $user);
         
 		$displayButton = "add";
-		$result = User::isCollaborator($_SESSION['username'], $user);
+		$result = Collaborator::isCollaborator($_SESSION['username'], $user);
 		$sentBy = $result['sent_by'];
 		$isCollab = $result['status'];
 		if ($isCollab != null) {

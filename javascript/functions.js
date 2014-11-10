@@ -266,16 +266,7 @@ $(document).ready(function() {
 		var pW = $("#user_password").val();
 		var verPW = $("#verify_password").val();
         var favoriteGenre = $("#favoriteGenre").val();
-
-		var hasEmailChanged = false;
-
-		$("#email").on("input", function() {
-			if ($("#email").val() != email) {
-				hasEmailChanged = true;
-			}
-		});
         
-
 		if (fName.length == 0 || lName.length == 0 || email.length == 0 || user.length == 0 || favoriteGenre == "Select a genre...") {
 			$("#editProfileError").text("All values except Password and Verify Password are mandatory!");
 			return;
@@ -290,18 +281,14 @@ $(document).ready(function() {
 			var updatedInformation = {
 				"first_name": fName,
 				"last_name": lName,
+                "email": email,
                 "favorite_genre": favoriteGenre
 			};
 
 			if (pW) {
 				updatedInformation["password"] = pW;
 			}
-
-			if (hasEmailChanged) {
-				updatedInformation['email'] = email;
-			}
             
-			
 			$.post("./updateUser", updatedInformation, function (data) {
 				if (data) {
 					$("#editProfileError").text(data);
@@ -502,7 +489,9 @@ $(document).ready(function() {
 		$.post("../comment/delete", {
 			id: idToDelete,
 			commenter: commentOwner
-		});
+		}, function (data) {
+		    location.reload();
+        });
 	});
 
 	//Send a collaborate request to a user

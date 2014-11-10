@@ -30,7 +30,7 @@ function renderEvent($event=null, $user) {
     switch($eventType) {
         // add comment
         case 'add_comment':
-            $commentData = Album::getComment($event['data']);
+            $commentData = Comment::getComment($event['data']);
             $comment = $commentData['text'];
             $album_owner = $commentData['album_owner'];
             //echo '<li>';//$user/you added the comment: $data[0] to the album $data[1]
@@ -50,7 +50,7 @@ function renderEvent($event=null, $user) {
             $dataArray = explode(",", $event['album_name']);
             
             //echo '<li>';//$user/you added the track: $data[0] to the album $data[1]
-            echo $username . ' added the track '. $event['data'] .' to the album '. "<a href=".SERVER_PATH.$dataArray[1].'/'.str_replace(" ", "%20", $dataArray[0]).">".$dataArray[0]."</a>" .' by '. "<a href=".SERVER_PATH.$dataArray[1].">".$dataArray[1]."</a>" . ' - '. date("M j, g:i a", strtotime($event['when_happened']));
+            echo $username . ' added the track "'. $event['data'] .'" to the album "'. "<a href=".SERVER_PATH.$dataArray[1].'/'.str_replace(" ", "%20", $dataArray[0]).">".$dataArray[0]."</a>" .'" by '. "<a href=".SERVER_PATH.$dataArray[1].">".$dataArray[1]."</a>" . ' - '. date("M j, g:i a", strtotime($event['when_happened']));
             //echo '</li>';
             break;
 
@@ -68,6 +68,16 @@ function renderEvent($event=null, $user) {
                 echo $username .' are collaborating with '. "<a href=".SERVER_PATH.$event['data'].">".$event['data']."</a>" . ' - '  . date("M j, g:i a", strtotime($event['when_happened']));
             } else {
                 echo $username .' is collaborating with '. "<a href=".SERVER_PATH.$event['data'].">".$event['data']."</a>" . ' - ' . date("M j, g:i a", strtotime($event['when_happened']));
+            }
+            //echo '</li>';
+            break;
+        case 'change_genre':
+            $dataArray = explode(",", $event['data']);
+            //echo '<li>';//$user/you changed the favorite genre from "$data[0]" to "$data[1]"
+            if (strpos($username, 'You') !== false) {
+                echo $username .' changed your favorite genre from "'. $dataArray[0] .'" to "' . $dataArray[1] . '" - '. date("M j, g:i a", strtotime($event['when_happened']));
+            } else {
+                echo $username .' changed their favorite genre from "'. $dataArray[0] .'" to "' . $dataArray[1] . '" - '. date("M j, g:i a", strtotime($event['when_happened']));
             }
             //echo '</li>';
             break;

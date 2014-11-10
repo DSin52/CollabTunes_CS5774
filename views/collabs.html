@@ -2,7 +2,7 @@
         <h3 style="text-align: left;">Collaborator Feed</h3>
           <ul class="events">
             <?php 
-            $collaborators = User::getCollaborators($_SESSION['username'], 1);
+            $collaborators = Collaborator::getCollaborators($_SESSION['username'], 1);
             if(count($collaborators) == 0) { ?>
               <h4> No Collaborators</h4>
               <?php } 

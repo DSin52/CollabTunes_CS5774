@@ -190,7 +190,7 @@
               <button type="button" class="btn btn-danger deletetrack" data-toggle="modal" data-target="#deleteTrackModal">Delete Track</button>
               
             </div>
-            <?php } else if (User::isCollaborator($_SESSION['username'], $curAlbum['album_owner'])['status'] == 1) { ?> <!-- is_null-->
+            <?php } else if (Collaborator::isCollaborator($_SESSION['username'], $curAlbum['album_owner'])['status'] == 1) { ?> <!-- is_null-->
             <div class="form-group formButtons">
               <button type="button" id="trackModalButton" class="btn btn-success" data-toggle="modal" data-target="#trackModal">Add Track</button>
             </div>

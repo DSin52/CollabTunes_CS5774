@@ -4,7 +4,7 @@ require_once '../global.php';
 
 $collabWith = $_POST['collaborator'];
 
-$result = User::collab_request($_SESSION['username'], $collabWith);
+$result = Collaborator::collab_request($_SESSION['username'], $collabWith);
 
 if ($result == 1) {
     $eventProperties = [
