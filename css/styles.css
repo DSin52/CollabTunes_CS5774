@@ -311,35 +311,91 @@ h3 {
 
 /*Set the audio player styles*/
 
-ol.playlist { padding: 0px; margin: 0px; list-style: decimal-leading-zero inside; color: #ccc; width: 460px; border-top: 1px solid #ccc; font-size: 0.9em; }
-ol li { position: relative; margin: 0px; padding: 9px 2px 10px; border-bottom: 1px solid #ccc; cursor: pointer; }
-ol li a { display: block; text-indent: -3.3ex; padding: 0px 0px 0px 20px; }
-li.playing a { color: #fff; }
-li.playing:before { content: "\266B"; width: 14px; height: 14px; padding: 3px; line-height: 14px; margin: 0px; position: absolute; left: -24px; top: 9px; color: #fff; font-size: 13px; text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2); }
+ol.playlist { padding: 0px; margin: 0px; list-style: decimal-leading-zero inside; color: black; width: 460px; border-top: 1px solid #FFF; font-size: 0.9em; }
+ol li { position: relative; margin: 0px; padding: 9px 2px 10px; border-bottom: 1px solid #FFF; cursor: pointer; }
+ol li a { display: block; text-indent: -3.3ex; padding: 0px 0px 0px 20px; color: black;}
+ol li a:hover { display: block; text-indent: -3.3ex; padding: 0px 0px 0px 20px; color: black;}
+li.playing a { color: black; }
+li.playing:before { content: "\266B"; width: 14px; height: 14px; padding: 3px; line-height: 14px; margin: 0px; position: absolute; left: -24px; top: 9px; color: black; font-size: 13px; text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2); }
 
-.audiojs { margin: 15px 0px 20px; }
+.audiojs { margin: 20px 0px 20px; }
 #wrapper { width: 460px; margin: 10px auto 10px; }
 
 a { color: #b42727; text-decoration: none; }
-a:hover { color: #fff; text-decoration:none;}
+a:hover { color: #7b0000; text-decoration:none;}
 
 div.play-pause p { margin-left: -6px; }
 
+.events {
+    padding-left: 0px;
+    font-size: 1.3em;
+    height:50vh;
+    width:100%;
+    overflow-y:scroll;
+}
+
+.me {
+    background-color: #909496;
+    height: 92vh;
+}
+
+.event {
+    background-color: white;
+    margin-right: 7px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar { 
+/*    display: none;*/
+}
+
+.album_title {
+    text-align: center;
+/*    display: inline-block;*/
+}
+
+.artist {
+    text-align: center;
+/*    display: inline-block;*/
+}
+
+#albumCover, #albumCoverDiv {
+	height: 300px;
+	width: 300px;
+	margin: 0 auto;
+}
+
+.albumInfo {
+    text-align: center;
+}
+
+.delete_comment {
+/*    margin-top: 10px;*/
+}
+
 #comment_area {
 	width:100%;
+    margin-top: 10px;
+    border-radius: 10px;
+    resize: none;
 }
 
 .comments {
 	font-size: 20px;
+    height:70vh;
+    width:100%;
+    overflow-y:scroll;
+    margin-top: 20px;
 }
 
 .comment {
-	padding: 20px;
-    margin-bottom: 0px;
+/*	padding: 20px;*/
+/*    margin-top: 10px;*/
     display: inline;
 }
 
-ul {
-    padding-left: 10px;
-    font-size: 1.3em;
+.trackButtons {
+    margin-top: 20px;
 }

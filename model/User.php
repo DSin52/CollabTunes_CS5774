@@ -360,7 +360,7 @@ class User {
 
 	//Get all collaborators for a user
 	public static function getCollaborators($username, $status) {
-		$query = sprintf("select * from %s where `%s` = '%s' and `%s`='%s'",
+		$query = sprintf("select * from %s where `%s` = '%s' and `%s`='%s' order by `modified` desc",
 			'collaborators',
 			'friend_one',
 			$username,
@@ -368,7 +368,7 @@ class User {
 			0
 			);
 
-		$query2 = sprintf("select * from %s where `%s` = '%s' and `%s`='%s'",
+		$query2 = sprintf("select * from %s where `%s` = '%s' and `%s`='%s' order by `modified` desc",
 			'collaborators',
 			'friend_one',
 			$username,

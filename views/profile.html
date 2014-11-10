@@ -31,13 +31,15 @@
         <?php } ?>
         <?php } ?>
         <h3 class="prof"><?= $curUser['first_name']." ".$curUser['last_name']. " - ". $curUser['favorite_genre'] ?></h3>
-        
-        <ul>
+
+        <ul class="events">
           <?php 
-          $events = Event::getEvents('username', $_SESSION['username']);
-          foreach($events as $e) {
-            renderEvent($e, $_SESSION['username']);
-          } ?>
+          $events = Event::getEvents('username', $curUser['username']);
+          foreach($events as $e) { ?>
+            <div class="event">
+            <?php renderEvent($e, $_SESSION['username']); ?>
+            </div>
+            <?php } ?>
         </ul>
       </div>
 
