@@ -10,7 +10,7 @@ if(isset($_SESSION['username'])) {
 	if (($curAlbum = Album::albumExist($album, $uri[sizeof($uri)-2]))) {
 		
 		$curAlbum =  Album::getInfoByAlbum($curAlbum);
-        $comments = Comment::getComments($curAlbum['album_name'], $curAlbum['album_owner']);
+        $comments = Comment::getComments($curAlbum['album_name'], $curAlbum['album_owner']); //Get the album's comments
 		$pageName = 'CollabTunes - ' . $uri[sizeof($uri)-3];
 		$tracks = Track::getTracks($album, $uri[sizeof($uri)-2]);
 		require_once '../views/header.html';

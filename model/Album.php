@@ -159,7 +159,7 @@ class Album {
 		}
 	}
 
-	//Modifies the album name
+	//Modifies the album object
 	public static function editAlbum($orig_album, $album_name, $album_owner, $updated = array()) {
 		if (self::doesAlbumExist($album_name, $album_owner) != null) {
 			$fields = array();

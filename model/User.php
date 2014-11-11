@@ -86,7 +86,7 @@ class User {
 		return self::userExists("username", $username);
 	}
 
-	//Method to check if user has special permissions
+	//Method to check if user has special permissions (moderator/admin/regular user)
 	public static function isSpecial($username) {
 		$specialUser = self::userExists("username", $username);
 		return $specialUser->user_type;

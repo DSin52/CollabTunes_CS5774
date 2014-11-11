@@ -1,5 +1,4 @@
 body {
-/*	background-color: #404040;*/
     background-color: #bdc3c7;
 }
 
@@ -211,11 +210,6 @@ h3 {
 	padding: 20px;
 }
 
-#publish {
-	margin: 20px;
-	padding: 20px;
-}
-
 /*  SECTIONS  */
 .section {
 	clear: both;
@@ -271,23 +265,6 @@ h3 {
 	}
 }
 
-#lab {
-	text-align: center;
-}
-
-.messages {
-	border: 1px solid black;
-}
-
-.controls {
-	padding: 25px;
-}
-
-.lab_button {
-	margin: 25px;
-	padding: 15px;
-}
-
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
 
 @media only screen and (max-width: 480px) {
@@ -313,7 +290,6 @@ h3 {
 }
 
 /*Set the audio player styles*/
-
 ol.playlist { padding: 0px; margin: 0px; list-style: decimal-leading-zero inside; color: black; width: 460px; border-top: 1px solid #FFF; font-size: 0.9em; }
 ol li { position: relative; margin: 0px; padding: 9px 2px 10px; border-bottom: 1px solid #FFF; cursor: pointer; }
 ol li a { display: block; text-indent: -3.3ex; padding: 0px 0px 0px 20px; color: black;}
@@ -329,17 +305,19 @@ a:hover { color: #7b0000; text-decoration:none;}
 
 div.play-pause p { margin-left: -6px; }
 
+/*Activity feed column*/
+.me {
+    background-color: #909496;
+    height: 92vh;
+}
+
+/*Events related styling*/
 .events {
     padding-left: 0px;
     font-size: 1.3em;
     height:50vh;
     width:100%;
     overflow-y:scroll;
-}
-
-.me {
-    background-color: #909496;
-    height: 92vh;
 }
 
 .event {
@@ -350,18 +328,13 @@ div.play-pause p { margin-left: -6px; }
     border-radius: 15px;
 }
 
-::-webkit-scrollbar { 
-/*    display: none;*/
-}
-
+/*Album page related styling*/
 .album_title {
     text-align: center;
-/*    display: inline-block;*/
 }
 
 .artist {
     text-align: center;
-/*    display: inline-block;*/
 }
 
 #albumCover, #albumCoverDiv {
@@ -374,6 +347,11 @@ div.play-pause p { margin-left: -6px; }
     text-align: center;
 }
 
+.trackButtons {
+    margin-top: 20px;
+}
+
+/*Comment related styling*/
 .delete_comment {
     display: inline;
     float: left;
@@ -398,16 +376,9 @@ div.play-pause p { margin-left: -6px; }
 }
 
 .comment {
-/*	padding: 20px;*/
-/*    margin-top: 10px;*/
-/*    display: inline;*/
     background-color: white;
     margin-right: 7px;
     margin-bottom: 10px;
     padding: 5px;
     border-radius: 15px;
-}
-
-.trackButtons {
-    margin-top: 20px;
 }

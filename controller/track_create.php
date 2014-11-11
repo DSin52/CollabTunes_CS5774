@@ -37,7 +37,6 @@ if (Track::trackExist($track_name, $track_album, $album_owner, $track_owner, $al
 	echo json_encode($error);
 	return;
 } else {
-	// echo $track_name;
 	$properties = array(
 		"track_name" => $track_name,
 		"track_album" => $track_album,

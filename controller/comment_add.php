@@ -7,8 +7,10 @@ $album_name = urldecode($_POST['album_name']);
 $currentCommenter = $_SESSION['username'];
 $comment = $_POST['comment'];
 
+// Add a comment to the database.
 $id = Comment::addComment($album_name, $album_owner, $comment, $currentCommenter);
 
+// Create an event related to the comment.
 $eventProperties = [
     'event_type' => 'add_comment',
     'username' => $currentCommenter,

@@ -579,46 +579,4 @@ $(document).ready(function() {
 		location.reload();
 	}
 
-	/***********DUMMY FUNCTIONS FOR OTHER TABS***************/
-
-	$("#publish").click(function() {
-		alert("It will insert a new project in My Music category");
-	});
-
-	$("#add_iter_btn").click(function() {
-		if ($("#description").val() && $("#description").val().length > 0) {
-			alert("This will add new iteration to the Lab");
-			$("#iterModal").modal("hide");
-			return;
-		}
-		alert("Please Enter a description");
-	});
-
-	$("#publish_lab").click(function() {
-		alert("This will publish work to My Music");
-	});
-
-	$("#delete_lab").click(function() {
-		alert("This will delete this lab session");
-	});
-
-	$(".download").click(function() {
-		alert("This will download the song to your computer");
-	});
-
-	$(".edit").click(function() {
-		alert("This will edit the song in Lab section");
-	});
-
-	$(".delete_song").click(function() {
-		alert("This will delete your song");
-	});
-
-	$(".like").click(function() {
-		alert("This will add a like to the song");
-	});
-
-	$(".collab").click(function() {
-		alert("This will send a collab request for this song to creator");
-	});
 });

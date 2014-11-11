@@ -1,5 +1,5 @@
     <div class="container-fluid">
-      <div class="col-md-3 me">
+      <div class="col-md-3 me"> <!-- Populate the collaborators feed -->
         <h3 style="text-align: left;">Collaborator Feed</h3>
           <ul class="events">
             <?php 
@@ -21,7 +21,6 @@
         
       <div class="col-md-9 main">
         <h1 class="page-header">Community</h1>
-        
         <!-- Populates the genres dropdown menu. -->
         <?php if(!is_null($genres)){ ?>
         <div class="genre_pick">
@@ -33,10 +32,8 @@
           ?>
               <option id="<?=$genre?>"><?=$genre?></option>
           <?php } ?>
-
           </select>
           </div>
-
         <?php } ?>
 
         <!-- Populates the rows with each album from the database -->
