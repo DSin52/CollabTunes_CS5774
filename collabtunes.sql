@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.20)
 # Database: collabtunes
-# Generation Time: 2014-11-10 21:39:06 +0000
+# Generation Time: 2014-11-11 00:11:49 +0000
 # ************************************************************
 
 
@@ -69,7 +69,11 @@ LOCK TABLES `collaborators` WRITE;
 INSERT INTO `collaborators` (`friend_one`, `friend_two`, `status`, `modified`, `id`, `sent_by`)
 VALUES
 	('test','divit52',1,'2014-11-09 14:54:15',9,'test'),
-	('divit52','test',1,'2014-11-09 14:54:15',10,'test');
+	('divit52','test',1,'2014-11-09 14:54:15',10,'test'),
+	('schadha','divit52',1,'2014-11-11 00:01:26',11,'schadha'),
+	('divit52','schadha',1,'2014-11-11 00:01:26',12,'schadha'),
+	('kluther','schadha',1,'2014-11-11 00:03:40',13,'kluther'),
+	('schadha','kluther',1,'2014-11-11 00:03:40',14,'kluther');
 
 /*!40000 ALTER TABLE `collaborators` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -83,7 +87,7 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `username` varchar(100) NOT NULL,
   `album_name` varchar(500) NOT NULL,
-  `text` varchar(500) NOT NULL,
+  `text` text NOT NULL,
   `album_owner` varchar(100) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -106,7 +110,8 @@ VALUES
 	('schadha','Test Album Sanchit','6','schadha','2014-11-10 21:36:32',19),
 	('schadha','Test Album Sanchit','7','schadha','2014-11-10 21:36:33',20),
 	('schadha','Test Album Sanchit','8','schadha','2014-11-10 21:36:35',21),
-	('schadha','Test Album Sanchit','9','schadha','2014-11-10 21:36:38',22);
+	('schadha','Test Album Sanchit','9','schadha','2014-11-10 21:36:38',22),
+	('schadha','Test Album Sanchit','10','schadha','2014-11-11 00:02:07',23);
 
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -147,7 +152,15 @@ VALUES
 	('add_comment','schadha','20','Test Album Sanchit','2014-11-10 21:36:33'),
 	('add_comment','schadha','21','Test Album Sanchit','2014-11-10 21:36:35'),
 	('add_comment','schadha','22','Test Album Sanchit','2014-11-10 21:36:38'),
-	('add_track','schadha','Testing','Test Album Sanchit,schadha','2014-11-10 21:37:01');
+	('add_track','schadha','Testing','Test Album Sanchit,schadha','2014-11-10 21:37:01'),
+	('add_collaborator1','schadha','divit52','','2014-11-11 00:01:26'),
+	('add_collaborator2','divit52','schadha','','2014-11-11 00:01:26'),
+	('add_comment','schadha','23','Test Album Sanchit','2014-11-11 00:02:07'),
+	('add_track','schadha','Power','Test Album Sanchit,schadha','2014-11-11 00:02:18'),
+	('add_collaborator1','kluther','schadha','','2014-11-11 00:03:40'),
+	('add_collaborator2','schadha','kluther','','2014-11-11 00:03:40'),
+	('change_genre','schadha','Rap,Pop','','2014-11-11 00:09:01'),
+	('change_genre','schadha','Pop,Rap','','2014-11-11 00:09:07');
 
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -171,7 +184,7 @@ LOCK TABLES `track` WRITE;
 
 INSERT INTO `track` (`track_name`, `track_path`, `track_owner`, `track_album`, `album_owner`)
 VALUES
-	('Testing','../uploads/schadha_Test_Album_Sanchit_Testing.mp3','schadha','Test Album Sanchit','schadha');
+	('Power','../uploads/schadha_Test_Album_Sanchit_Power.mp3','schadha','Test Album Sanchit','schadha');
 
 /*!40000 ALTER TABLE `track` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -198,10 +211,10 @@ LOCK TABLES `user` WRITE;
 
 INSERT INTO `user` (`username`, `email`, `password`, `first_name`, `last_name`, `user_type`, `favorite_genre`)
 VALUES
-	('divit52','test@test2','$2y$10$1XG/L8sGkh7g1DnkpE2TluJnmpYwTOzoT1UxIG13zec.m.e8NwGz2','Divit','Singh',0,'Rap'),
-	('schadha','schadha@vt.edu','$2y$10$XamgzJzAqSrP4KcHm8PvuuRVx0/LI5Hc9N/eEpciyYLqtHpMZrRCi','Sanchit','Chadha',1,'Rap'),
-	('schadha2','test2@test2.com','$2y$10$0bdWBANX8nH4RGBMMv1W5eeqOgL6P21PJBd7rS0/OEOAxEipd0BB2','Sanchit','Chadha',0,'Electronic'),
-	('test','test@test','$2y$10$ipjezG1iGOY9M/WZTke3nuAfv9M6G7.J6bSDUiUAvcaaLuoQr4j2i','test','test',0,'Rap');
+	('divit52','test@test2','$2y$10$1XG/L8sGkh7g1DnkpE2TluJnmpYwTOzoT1UxIG13zec.m.e8NwGz2','Divit','Singh',2,'Rap'),
+	('kluther','kluther@vt.edu','$2y$10$GiziXotSkaExlsdwhFzbeutMybZveI3QgfuQaFjxCvHH20UzekhS2','Kurt','Luther',0,'Pop'),
+	('schadha','schadha@vt.edu','$2y$10$XamgzJzAqSrP4KcHm8PvuuRVx0/LI5Hc9N/eEpciyYLqtHpMZrRCi','Sanchit','Chadha',2,'Rap'),
+	('test','test@test','$2y$10$ipjezG1iGOY9M/WZTke3nuAfv9M6G7.J6bSDUiUAvcaaLuoQr4j2i','test','test',1,'Rap');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
