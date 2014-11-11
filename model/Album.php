@@ -140,8 +140,9 @@ class Album {
 				mysql_real_escape_string($album_name)
 			);
             
-            $query_deleteEvents = sprintf("Delete from event where `album_name` = '%s'",
-				mysql_real_escape_string($album_name)
+            $query_deleteEvents = sprintf("Delete from event where `album_name` = '%s,%s'",
+				mysql_real_escape_string($album_name),
+                mysql_real_escape_string($album_owner)
 			);
             //delete comments
             //delete events
